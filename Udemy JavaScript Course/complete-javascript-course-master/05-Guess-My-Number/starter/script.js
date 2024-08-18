@@ -2,7 +2,7 @@
 
 const scoreObj = {
     score: 20,
-    heighestScore: Number.MIN_VALUE,
+    heighestScore: -1,
 };
 let secretNumber = Math.trunc(Math.random() * 20) + 1;
 const numberTxt = document.querySelector(".number");
@@ -40,10 +40,9 @@ checkBtn.addEventListener("click", function () {
         numberTxt.textContent = secretNumber;
         heighestScoreTxt.textContent = scoreObj.heighestScore;
         bodyEle.style.backgroundColor = "#2f9e44";
-    } else if (guess > secretNumber) {
-        manageScoreAndMessage("📈 Too High");
-    } else if (guess < secretNumber) {
-        manageScoreAndMessage("📉 Too Low");
+    } else if (guess !== secretNumber) {
+        let message = guess > secretNumber ? "📈 Too High" : "📉 Too Low";
+        manageScoreAndMessage(message);
     }
 });
 
