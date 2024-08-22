@@ -1,0 +1,14 @@
+{
+    "name": "starter",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "compile:sass": "sass sass/main.scss css/style.css -w"
+    },
+    "author": "Arpit",
+    "license": "ISC",
+    "description": "Natour Landing Page",
+    "devDependencies": {
+        "sass": "^1.77.8"
+    }
+}
