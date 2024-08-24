@@ -21,6 +21,19 @@
         color: #777;
     }
 
+    &--white::after {
+        background-color: $color-white;
+    }
+
+    &--green {
+        background-color: $color-primary;
+        color: #ffffff;
+    }
+
+    &--green::after {
+        background-color: $color-primary;
+    }
+
     &::after {
         content: "";
         display: inline-block;
@@ -42,10 +55,6 @@
             transform: scaleX(1.3) scaleY(1.6);
             opacity: 0;
         }
-    }
-
-    &--white::after {
-        background-color: $color-white;
     }
 
     &--animated {
