@@ -53,13 +53,13 @@
             text-decoration: none;
             text-transform: uppercase;
             display: inline-block;
-            transition: all .2s;
+            transition: all 0.2s;
         }
 
         &:hover,
         &:active {
             color: $color-primary;
-            box-shadow: 0 1rem 2rem rgba($color-black, .4);
+            box-shadow: 0 1rem 2rem rgba($color-black, 0.4);
             transform: rotate(5deg) scale(1.3);
         }
     }
