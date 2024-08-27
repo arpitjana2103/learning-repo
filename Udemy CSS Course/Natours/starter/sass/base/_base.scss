@@ -5,11 +5,46 @@
     padding: 0;
     box-sizing: inherit;
 }
+/*
+    1rem = 16px
+
+    16px -----> 100%
+    1px ------> (100/16)%
+    10px -----> ((100/16)*10)% = 62.5%
+    8px ------> ((100/16)*8)% = 50%
+    9px ------> ((100/16)*9)% = 56.25%
+    12px -----> ((100/16)*12)% = 75%
+*/
 
 html {
     font-size: 62.5%;
+
+    @include respond(big-desktop) {
+        font-size: 75%;
+        // 12px
+    }
+
+    @include respond(tab-land) {
+        font-size: 56.25%;
+        // 9px
+    }
+
+    @include respond(tab-port) {
+        font-size: 50%;
+        // 8px
+    }
+
+    @include respond(phone) {
+        font-size: 50%;
+        // 8px
+    }
 }
 
 body {
     box-sizing: border-box;
+    padding: 3rem;
+
+    @include respond(tab-port) {
+        padding: 0rem;
+    }
 }
