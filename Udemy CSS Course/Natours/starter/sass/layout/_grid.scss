@@ -22,6 +22,14 @@
 
         &:not(:last-child) {
             margin-right: $gutter-horizontal;
+
+            @include respond(tap-port) {
+                margin-right: 0;
+            }
+        }
+
+        @include respond(tap-port) {
+            width: 100% !important;
         }
     }
 
