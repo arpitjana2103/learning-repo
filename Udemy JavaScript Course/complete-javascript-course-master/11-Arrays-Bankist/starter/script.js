@@ -75,16 +75,16 @@ const displayMovements = function (movements) {
     });
 };
 
-displayMovements(account1.movements);
+// displayMovements(account1.movements);
 
 const calcDisplayBalance = function (movements) {
     const balance = movements.reduce((acc, mov) => acc + mov, 0);
     labelBalance.textContent = `${balance} ${EUROSIGN}`;
 };
 
-calcDisplayBalance(account1.movements);
+// calcDisplayBalance(account1.movements);
 
-const calcDisplaySummery = function (movements) {
+const calcDisplaySummery = function ({ movements, interestRate }) {
     const incomes = movements
         .filter((mov) => mov > 0)
         .reduce((acc, mov) => acc + mov, 0);
@@ -99,7 +99,7 @@ const calcDisplaySummery = function (movements) {
 
     const interest = movements
         .filter((mov) => mov > 0)
-        .map((deposite) => (deposite * 1.2) / 100)
+        .map((deposite) => (deposite * interestRate) / 100)
         .reduce((acc, int) => int + acc, 0);
 
     console.log(interest);
@@ -107,7 +107,7 @@ const calcDisplaySummery = function (movements) {
     labelSumInterest.textContent = `${interest} ${EUROSIGN}`;
 };
 
-calcDisplaySummery(account1.movements);
+// calcDisplaySummery(account1.movements);
 
 const createUsernames = function (accounts) {
     accounts.forEach(function (acc) {
@@ -121,9 +121,29 @@ const createUsernames = function (accounts) {
 
 createUsernames(accounts);
 
-const maxVal = account1.movements.reduce(
-    (mov, acc) => Math.max(acc, mov),
-    Number.MIN_VALUE
-);
+// Event Handelers
+let currentAccount;
+btnLogin.addEventListener("click", function (e) {
+    e.preventDefault();
+    currentAccount = accounts.find(
+        (acc) => acc.username === inputLoginUsername.value
+    );
+    console.log("currentAccount");
+    console.log(currentAccount);
 
-console.log(maxVal);
+    if (currentAccount?.pin === +inputLoginPin.value.trim()) {
+        // Display UI & Welcome Message
+        labelWelcome.textContent = `Welcome back, ${currentAccount.owner
+            .split(" ")
+            .at(0)}`;
+        containerApp.style.opacity = 100;
+
+        // Clear Inputs
+        inputLoginUsername.value = inputLoginPin.value = "";
+        inputLoginPin.blur();
+
+        displayMovements(currentAccount.movements);
+        calcDisplayBalance(currentAccount.movements);
+        calcDisplaySummery(currentAccount);
+    }
+});
