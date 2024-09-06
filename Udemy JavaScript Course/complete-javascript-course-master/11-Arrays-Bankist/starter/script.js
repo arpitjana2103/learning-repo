@@ -61,9 +61,14 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
     containerMovements.innerHTML = "";
-    movements.forEach(function (mov, i) {
+    console.log(movements);
+    let movementsClone = sort
+        ? movements.slice().sort((a, b) => a - b)
+        : movements;
+    console.log(movementsClone);
+    movementsClone.forEach(function (mov, i) {
         const type = mov > 0 ? "deposit" : "withdrawal";
         const html = `
             <div class="movements__row">
@@ -77,9 +82,9 @@ const displayMovements = function (movements) {
 
 // displayMovements(account1.movements);
 
-const calcDisplayBalance = function (movements) {
-    const balance = movements.reduce((acc, mov) => acc + mov, 0);
-    labelBalance.textContent = `${balance} ${EUROSIGN}`;
+const calcDisplayBalance = function (account) {
+    account.balance = account.movements.reduce((acc, mov) => acc + mov, 0);
+    labelBalance.textContent = `${account.balance} ${EUROSIGN}`;
 };
 
 // calcDisplayBalance(account1.movements);
@@ -121,6 +126,12 @@ const createUsernames = function (accounts) {
 
 createUsernames(accounts);
 
+const updateUI = function (account) {
+    displayMovements(account.movements);
+    calcDisplayBalance(account);
+    calcDisplaySummery(account);
+};
+
 // Event Handelers
 let currentAccount;
 btnLogin.addEventListener("click", function (e) {
@@ -128,8 +139,6 @@ btnLogin.addEventListener("click", function (e) {
     currentAccount = accounts.find(
         (acc) => acc.username === inputLoginUsername.value
     );
-    console.log("currentAccount");
-    console.log(currentAccount);
 
     if (currentAccount?.pin === +inputLoginPin.value.trim()) {
         // Display UI & Welcome Message
@@ -142,8 +151,70 @@ btnLogin.addEventListener("click", function (e) {
         inputLoginUsername.value = inputLoginPin.value = "";
         inputLoginPin.blur();
 
-        displayMovements(currentAccount.movements);
-        calcDisplayBalance(currentAccount.movements);
-        calcDisplaySummery(currentAccount);
+        updateUI(currentAccount);
     }
+});
+
+btnTransfer.addEventListener("click", function (e) {
+    e.preventDefault();
+    const amount = Number(inputTransferAmount.value);
+    const receiverAccount = accounts.find(
+        (acc) => acc.username === inputTransferTo.value
+    );
+
+    if (
+        amount > 0 &&
+        receiverAccount &&
+        currentAccount.balance >= amount &&
+        receiverAccount?.username !== currentAccount.username
+    ) {
+        currentAccount.movements.push(-amount);
+        receiverAccount.movements.push(amount);
+        updateUI(currentAccount);
+    }
+
+    inputTransferAmount.value = inputTransferTo.value = "";
+});
+
+btnClose.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (
+        inputCloseUsername.value.trim() === currentAccount.username &&
+        +inputClosePin.value === currentAccount.pin
+    ) {
+        let index = accounts.findIndex(function (account) {
+            return account.username === currentAccount.username;
+        });
+
+        // Delete Account
+        accounts.splice(index, 1);
+
+        // Hide UI
+        containerApp.style.opacity = 0;
+    }
+});
+
+btnLoan.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const amount = Number(inputLoanAmount.value);
+    inputLoanAmount.value = "";
+
+    if (
+        amount > 0 &&
+        currentAccount.movements.some((mov) => mov >= amount * 0.1)
+    ) {
+        // Add movement
+        currentAccount.movements.push(amount);
+
+        // Update UI
+        updateUI(currentAccount);
+    }
+});
+
+let isSorted = false;
+btnSort.addEventListener("click", function (e) {
+    e.preventDefault();
+    displayMovements(currentAccount.movements, !isSorted);
+    isSorted = !isSorted;
 });
