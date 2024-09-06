@@ -81,6 +81,23 @@ const inputClosePin = document.querySelector(".form__input--pin");
 /////////////////////////////////////////////////
 // Functions
 
+const calscDaysPassed = function (date1, date2) {
+    return Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
+};
+
+const formatMovementDates = function (date) {
+    const daysPassed = calscDaysPassed(new Date(), date);
+
+    if (daysPassed === 0) return "Today";
+    if (daysPassed === 1) return "Yesterday";
+    if (daysPassed <= 7) return `${daysPassed} days ago`;
+
+    const day = `${date.getDate()}`.padStart(2, 0);
+    const month = `${date.getMonth() + 1}`.padStart(2, 0);
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+};
+
 const displayMovements = function (account, sort = false) {
     containerMovements.innerHTML = "";
 
@@ -90,12 +107,9 @@ const displayMovements = function (account, sort = false) {
 
     movs.forEach(function (mov, i) {
         const type = mov > 0 ? "deposit" : "withdrawal";
-        const date = new Date(account.movementsDates[i]);
 
-        const day = `${date.getDate()}`.padStart(2, 0);
-        const month = `${date.getMonth() + 1}`.padStart(2, 0);
-        const year = date.getFullYear();
-        const displayDate = `${day}/${month}/${year}`;
+        const date = new Date(account.movementsDates[i]);
+        const displayDate = formatMovementDates(date);
 
         const html = `
       <div class="movements__row">
