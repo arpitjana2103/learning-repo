@@ -161,7 +161,6 @@ const createUsernames = function (accs) {
             .join("");
     });
 };
-createUsernames(accounts);
 
 const updateUI = function (acc) {
     // Display movements
@@ -174,15 +173,41 @@ const updateUI = function (acc) {
     calcDisplaySummary(acc);
 };
 
+const formatTime = function (sec) {
+    const minute = String(Math.trunc(sec / 60)).padStart(2, "0");
+    const second = String(sec % 60).padStart(2, "0");
+    return `${minute}:${second}`;
+};
+
+const tick = function (time) {
+    labelTimer.textContent = formatTime(time.sec);
+
+    if (time.sec === 0) {
+        // Logout
+        currentAccount = undefined;
+        containerApp.style.opacity = 0;
+    }
+
+    time.sec--;
+};
+
+const startTimer = function () {
+    const time = { sec: 5 * 60 };
+
+    tick(time);
+    return setInterval(() => tick(time), 1000);
+};
+
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
+let currentAccount, timer;
 
 // FAKE Always Logged in
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
 
+// Label Today's Date
 const now = new Date();
 const day = `${now.getDate()}`.padStart(2, 0);
 const month = `${now.getMonth() + 1}`.padStart(2, 0);
@@ -192,6 +217,8 @@ const minute = now.getMinutes();
 
 labelDate.textContent = `${day}/${month}/${year}, ${hour}:${minute}`;
 
+createUsernames(accounts);
+
 btnLogin.addEventListener("click", function (e) {
     // Prevent form from submitting
     e.preventDefault();
@@ -199,7 +226,6 @@ btnLogin.addEventListener("click", function (e) {
     currentAccount = accounts.find(
         (acc) => acc.username === inputLoginUsername.value
     );
-    console.log(currentAccount);
 
     if (currentAccount?.pin === Number(inputLoginPin.value)) {
         // Display UI and message
@@ -211,6 +237,10 @@ btnLogin.addEventListener("click", function (e) {
         // Clear input fields
         inputLoginUsername.value = inputLoginPin.value = "";
         inputLoginPin.blur();
+
+        // Start Timer
+        if (timer) clearInterval(timer);
+        timer = startTimer();
 
         // Update UI
         updateUI(currentAccount);
@@ -235,14 +265,9 @@ btnTransfer.addEventListener("click", function (e) {
         currentAccount.movements.push(-amount);
         receiverAcc.movements.push(amount);
 
-        // Add transger date
-
-        console.log(currentAccount.movementsDates());
-
+        // Add transfer date
         currentAccount.movementsDates.push(new Date().toISOString());
         receiverAcc.movementsDates.push(new Date().toISOString());
-
-        console.log(currentAccount.movementsDates());
 
         // Update UI
         updateUI(currentAccount);
@@ -297,22 +322,3 @@ btnSort.addEventListener("click", function (e) {
     displayMovements(currentAccount, !sorted);
     sorted = !sorted;
 });
-
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
-
-// Decimal Base 10 - 0 to 9
-// Binary Base 2 - 0, 1
-
-console.log(23 === 23.0);
-console.log(0.1 + 0.2);
-
-const getRandomInt = function (min, max) {
-    if (max < min) {
-        [min, max] = [max, min];
-    }
-    const range = max - min + 1;
-    const random = Math.trunc(Math.random() * range) + min;
-    return random;
-};
