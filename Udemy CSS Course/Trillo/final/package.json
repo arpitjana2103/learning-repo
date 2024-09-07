@@ -1,25 +1,37 @@
 {
-  "name": "Trillo",
-  "version": "1.0.0",
-  "description": "trillo app",
-  "main": "index.js",
-  "scripts": {
-    "watch:sass": "node-sass sass/main.scss css/style.css -w",
-    "devserver": "live-server",
-    "start": "npm-run-all --parallel devserver watch:sass",
-    
-    "compile:sass": "node-sass sass/main.scss css/style.comp.css",
-    "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' css/style.comp.css -o css/style.prefix.css",
-    "compress:css": "node-sass css/style.prefix.css css/style.css --output-style compressed",
-    "build:css": "npm-run-all compile:sass prefix:css compress:css"
-  },
-  "author": "Jonas",
-  "license": "ISC",
-  "devDependencies": {
-    "autoprefixer": "^7.1.4",
-    "concat": "^1.0.3",
-    "node-sass": "^4.5.3",
-    "npm-run-all": "^4.1.1",
-    "postcss-cli": "^4.1.1"
-  }
+    "name": "trello-flexbox-ui-01",
+    "version": "1.0.0",
+    "description": "This project will help to learn flexbox",
+    "main": "index.js",
+    "scripts": {
+        "watch:sass": "sass sass/main.scss css/style.css -w",
+        "compile:sass": "sass sass/main.scss css/style.comp.css",
+        "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' css/style.comp.css -o css/style.prefix.css",
+        "compress:css": "sass css/style.prefix.css css/style.min.css --style=compressed",
+        "remove:css": "rm -f css/style.comp.css css/style.prefix.css css/style.comp.css.map css/style.min.css.map css/style.css",
+        "format:code": "prettier . --write",
+        "build:css": "npm-run-all compile:sass prefix:css compress:css remove:css format:code"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/arpitjana2103/Trello-Flexbox-UI-01.git"
+    },
+    "keywords": [
+        "css",
+        "scss",
+        "flexbox"
+    ],
+    "author": "Arpit Jana",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/arpitjana2103/Trello-Flexbox-UI-01/issues"
+    },
+    "homepage": "https://github.com/arpitjana2103/Trello-Flexbox-UI-01#readme",
+    "devDependencies": {
+        "autoprefixer": "^10.4.20",
+        "npm-run-all": "^4.1.5",
+        "postcss": "^8.4.41",
+        "postcss-cli": "^11.0.0",
+        "sass": "^1.77.8"
+    }
 }
