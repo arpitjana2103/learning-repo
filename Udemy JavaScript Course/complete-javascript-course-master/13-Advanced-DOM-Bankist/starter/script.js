@@ -35,16 +35,18 @@ document.addEventListener('keydown', function (e) {
 const buttonScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
-buttonScrollTo.addEventListener('click', function (e) {
-  const s1Coords = section1.getBoundingClientRect();
-
+buttonScrollTo.addEventListener('click', function () {
   // Old School Way
-  // window.scrollTo({
-  //   left: s1Coords.left + window.scrollX,
-  //   top: s1Coords.top + window.scrollY,
-  //   behavior: 'smooth',
-  // });
+
+  /*
+  const s1Coords = section1.getBoundingClientRect();
+  window.scrollTo({
+    left: s1Coords.left + window.scrollX,
+    top: s1Coords.top + window.scrollY,
+    behavior: 'smooth',
+  });
+  */
 
   // Modern Way
-  // section1.scrollIntoView({ behavior: 'smooth' });
+  section1.scrollIntoView({ behavior: 'smooth' });
 });
