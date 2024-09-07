@@ -31,3 +31,20 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+const buttonScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+buttonScrollTo.addEventListener('click', function (e) {
+  const s1Coords = section1.getBoundingClientRect();
+
+  // Old School Way
+  // window.scrollTo({
+  //   left: s1Coords.left + window.scrollX,
+  //   top: s1Coords.top + window.scrollY,
+  //   behavior: 'smooth',
+  // });
+
+  // Modern Way
+  // section1.scrollIntoView({ behavior: 'smooth' });
+});
