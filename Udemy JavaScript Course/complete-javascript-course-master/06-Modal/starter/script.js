@@ -22,7 +22,7 @@ modalBtns.forEach(function (btn) {
 });
 
 overlay.addEventListener("click", function () {
-  hideModel;
+  hideModel();
 });
 
 closeBtn.addEventListener("click", function () {
