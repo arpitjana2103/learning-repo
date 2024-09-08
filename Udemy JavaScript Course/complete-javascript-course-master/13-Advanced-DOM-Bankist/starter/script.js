@@ -100,3 +100,23 @@ tabContainer.addEventListener("click", function (e) {
             .classList.add("operations__content--active");
     }
 });
+
+// Menu Fadeout Anination
+
+const nav = document.querySelector(".nav");
+
+const handleHover = function (e, opacity) {
+    if (e.target.classList.contains("nav__link")) {
+        const link = e.target;
+        const siblings = link.closest(".nav").querySelectorAll(".nav__link");
+        const logo = link.closest(".nav").querySelector(".nav__logo");
+
+        siblings.forEach(function (el) {
+            if (el !== link) el.style.opacity = opacity;
+        });
+        logo.style.opacity = opacity;
+    }
+};
+
+nav.addEventListener("mouseover", (e) => handleHover(e, 0.6));
+nav.addEventListener("mouseout", (e) => handleHover(e, 1));
