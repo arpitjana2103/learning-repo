@@ -41,15 +41,14 @@ const section1 = document.querySelector("#section--1");
 
 buttonScrollTo.addEventListener("click", function () {
     // Old School Way
-
     /*
-  const s1Coords = section1.getBoundingClientRect();
-  window.scrollTo({
-    left: s1Coords.left + window.scrollX,
-    top: s1Coords.top + window.scrollY,
-    behavior: 'smooth',
-  });
-  */
+    const s1Coords = section1.getBoundingClientRect();
+    window.scrollTo({
+        left: s1Coords.left + window.scrollX,
+        top: s1Coords.top + window.scrollY,
+        behavior: 'smooth',
+    });
+    */
 
     // Modern Way
     section1.scrollIntoView({ behavior: "smooth" });
@@ -145,6 +144,7 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 headerObserver.observe(header);
 
 // Revel the sections
+
 const allSecitons = document.querySelectorAll(".section");
 const revelSections = function (entries, observer) {
     const [entry] = entries;
@@ -160,4 +160,28 @@ const sectionsObserver = new IntersectionObserver(revelSections, {
 allSecitons.forEach(function (section) {
     sectionsObserver.observe(section);
     section.classList.add("section--hidden");
+});
+
+// Lazy loading images
+
+const imgTargets = document.querySelectorAll("img[data-src]");
+
+const loadImg = function (entries, observer) {
+    const [entry] = entries;
+    if (entry.isIntersecting) {
+        entry.target.src = entry.target.dataset.src;
+        entry.target.addEventListener("load", function () {
+            entry.target.classList.remove("lazy-img");
+            observer.unobserve(entry.target);
+        });
+    }
+};
+
+const imgObserver = new IntersectionObserver(loadImg, {
+    root: null,
+    threshold: 0,
+    rootMargin: "200px",
+});
+imgTargets.forEach(function (img) {
+    imgObserver.observe(img);
 });
