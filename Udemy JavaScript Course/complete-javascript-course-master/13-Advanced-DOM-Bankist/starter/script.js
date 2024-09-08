@@ -43,13 +43,13 @@ buttonScrollTo.addEventListener("click", function () {
     // Old School Way
 
     /*
-    const s1Coords = section1.getBoundingClientRect();
-    window.scrollTo({
-      left: s1Coords.left + window.scrollX,
-      top: s1Coords.top + window.scrollY,
-      behavior: 'smooth',
-    });
-    */
+  const s1Coords = section1.getBoundingClientRect();
+  window.scrollTo({
+    left: s1Coords.left + window.scrollX,
+    top: s1Coords.top + window.scrollY,
+    behavior: 'smooth',
+  });
+  */
 
     // Modern Way
     section1.scrollIntoView({ behavior: "smooth" });
@@ -108,10 +108,12 @@ const nav = document.querySelector(".nav");
 const handleHover = function (e, opacity) {
     if (e.target.classList.contains("nav__link")) {
         const link = e.target;
-        const siblings = link.closest(".nav").querySelectorAll(".nav__link");
+        const siblingLinks = link
+            .closest(".nav")
+            .querySelectorAll(".nav__link");
         const logo = link.closest(".nav").querySelector(".nav__logo");
 
-        siblings.forEach(function (el) {
+        siblingLinks.forEach(function (el) {
             if (el !== link) el.style.opacity = opacity;
         });
         logo.style.opacity = opacity;
@@ -120,3 +122,24 @@ const handleHover = function (e, opacity) {
 
 nav.addEventListener("mouseover", (e) => handleHover(e, 0.6));
 nav.addEventListener("mouseout", (e) => handleHover(e, 1));
+
+// Stickey Navigation
+
+const header = document.querySelector(".header");
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+    const [entry] = entries;
+    if (!entry.isIntersecting) {
+        nav.classList.add("sticky");
+    } else {
+        nav.classList.remove("sticky");
+    }
+};
+const headerObserver = new IntersectionObserver(stickyNav, {
+    root: null,
+    threshold: 0,
+    rootMargin: `-${navHeight}px`,
+});
+
+headerObserver.observe(header);
