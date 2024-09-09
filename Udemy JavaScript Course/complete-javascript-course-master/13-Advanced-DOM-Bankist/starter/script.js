@@ -1,14 +1,12 @@
 "use strict";
 
-///////////////////////////////////////
-// Modal window
+/////////////////////////////////////////////////////////////////////////////////////////////
+// Modal window /////////////////////////////////////////////////////////////////////////////
 
 const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const btnCloseModal = document.querySelector(".btn--close-modal");
 const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
-
-// Show Hide Modal
 
 const openModal = function (e) {
     e.preventDefault();
@@ -34,7 +32,8 @@ document.addEventListener("keydown", function (e) {
     }
 });
 
-// Smooth Scroll Animation [ Button Scroll ]
+/////////////////////////////////////////////////////////////////////////////////////////////
+// SMOOTH SCROLL ANIMATION [ BUTTON SCROLL ] ////////////////////////////////////////////////
 
 const buttonScrollTo = document.querySelector(".btn--scroll-to");
 const section1 = document.querySelector("#section--1");
@@ -53,6 +52,9 @@ buttonScrollTo.addEventListener("click", function () {
     // Modern Way
     section1.scrollIntoView({ behavior: "smooth" });
 });
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+// EVENT DELEGATION IN PRACTICE [ LINK SCROLL ] /////////////////////////////////////////////
 
 // Event Delegation in Practice [ Link Scroll ]
 // 1. Add event listener to common parent element
@@ -76,7 +78,8 @@ document.querySelector(".nav__links").addEventListener("click", function (e) {
     }
 });
 
-// Tabbed Component
+/////////////////////////////////////////////////////////////////////////////////////////////
+// TABBED COMPONENT /////////////////////////////////////////////////////////////////////////
 
 const tabs = document.querySelectorAll(".operations__tab");
 const tabContainer = document.querySelector(".operations__tab-container");
@@ -100,7 +103,8 @@ tabContainer.addEventListener("click", function (e) {
     }
 });
 
-// Menu Fadeout Anination
+/////////////////////////////////////////////////////////////////////////////////////////////
+// MENU FADEOUT ANIMATION ///////////////////////////////////////////////////////////////////
 
 const nav = document.querySelector(".nav");
 
@@ -122,7 +126,8 @@ const handleHover = function (e, opacity) {
 nav.addEventListener("mouseover", (e) => handleHover(e, 0.6));
 nav.addEventListener("mouseout", (e) => handleHover(e, 1));
 
-// Stickey Navigation
+/////////////////////////////////////////////////////////////////////////////////////////////
+// STRICKY NAVIGATION ///////////////////////////////////////////////////////////////////////
 
 const header = document.querySelector(".header");
 const navHeight = nav.getBoundingClientRect().height;
@@ -143,7 +148,8 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 
 headerObserver.observe(header);
 
-// Revel the sections
+/////////////////////////////////////////////////////////////////////////////////////////////
+// REVELING THE SECTIONS ///////////////////////////////////////////////////////////////////////
 
 const allSecitons = document.querySelectorAll(".section");
 const revelSections = function (entries, observer) {
@@ -162,7 +168,8 @@ allSecitons.forEach(function (section) {
     // section.classList.add("section--hidden");
 });
 
-// Lazy loading images
+/////////////////////////////////////////////////////////////////////////////////////////////
+// LAZY LOADING IMAGES //////////////////////////////////////////////////////////////////////
 
 const imgTargets = document.querySelectorAll("img[data-src]");
 
@@ -186,7 +193,9 @@ imgTargets.forEach(function (img) {
     imgObserver.observe(img);
 });
 
-// Slider
+/////////////////////////////////////////////////////////////////////////////////////////////
+// SLIDER COMPONENT ///////////////////////////////////////////////////////////////////////////////////
+
 const slides = document.querySelectorAll(".slide");
 const btnLeft = document.querySelector(".slider__btn--left");
 const btnRight = document.querySelector(".slider__btn--right");
