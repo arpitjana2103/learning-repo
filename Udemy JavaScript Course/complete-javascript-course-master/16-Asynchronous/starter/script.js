@@ -119,17 +119,36 @@ getCountryDataAndNeighbour("india");
 ///////////////////////////////////////////////////////////////////////////
 // PART 02 -- [ FETCH & PROMISES ] ////////////////////////////////////////
 
+const getJSON = function (url) {
+    return fetch(url).then((response) => {
+        if (!response.ok)
+            throw new Error(`Country not found ${response.status}`);
+        return response.json();
+    });
+};
+
 const getCountryData = function (country) {
     fetch(`${baseURL}/name/${country}`)
-        .then((response) => response.json())
+        .then((response) => {
+            if (!response.ok)
+                throw new Error(`Country not found ${response.status}`);
+            return response.json();
+        })
         .then((data) => {
             renderCountry(data[0]);
             const neighbour = data[0].borders?.[0];
             return fetch(`${baseURL}/alpha/${neighbour}`);
         })
-        .then((response) => response.json())
+        .then((response) => {
+            if (!response.ok)
+                throw new Error(`Country not found ${response.status}`);
+            return response.json();
+        })
         .then((data) => {
-            renderCountry(data[0]);
+            renderCountry(data[0], "neighbour");
+        })
+        .catch(function (err) {
+            console.log(`${err} ⛔`);
         });
 };
 
@@ -149,4 +168,6 @@ const getCountryData2 = async function (countryName) {
     renderCountry(countryData, "neighbour");
 };
 
-getCountryData2("India");
+btn.addEventListener("click", function () {
+    getCountryData("Indiat");
+});
