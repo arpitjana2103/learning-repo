@@ -21,15 +21,14 @@ const Header = function () {
     );
 };
 
-const Pizza = function (props) {
-    console.log(props);
+const Pizza = function ({ pizzaObj }) {
     return (
         <div className="pizza">
-            <img src={props.photoName} alt={props.name} />
+            <img src={pizzaObj.photoName} alt={pizzaObj.name} />
             <div>
-                <h3>{props.name}</h3>
-                <p>{props.ingredients}</p>
-                <span>{props.price}</span>
+                <h3>{pizzaObj.name}</h3>
+                <p>{pizzaObj.ingredients}</p>
+                <span>{pizzaObj.price}</span>
             </div>
         </div>
     );
@@ -39,19 +38,12 @@ const Menu = function () {
     return (
         <main className="menu">
             <h2>Our menu</h2>
-            <Pizza
-                name="Pizza Spinaci"
-                ingredients="Tomato, mozarella, spinach and ricotta cheese"
-                photoName="pizzas/spinaci.jpg"
-                price={10}
-            />
 
-            <Pizza
-                name="Pizza Funghi"
-                ingredients="Tomato, mozarella, spinach and ricotta cheese"
-                photoName="pizzas/funghi.jpg"
-                price={12}
-            />
+            <ul className="pizzas">
+                {pizzaData.map(function (pizza, index) {
+                    return <Pizza pizzaObj={pizza} key={index} />;
+                })}
+            </ul>
         </main>
     );
 };
@@ -64,7 +56,15 @@ const Footer = function () {
 
     return (
         <footer className="footer">
-            {new Date().toLocaleDateString()} We'r Currently Open
+            {isOpen && (
+                <div className="order">
+                    <p>
+                        We'r open until {closeHour}:00. Come visit us or order
+                        online
+                    </p>
+                    <button className="btn">Order</button>
+                </div>
+            )}
         </footer>
     );
 };
