@@ -41,18 +41,35 @@ const Menu = function () {
     return (
         <main className="menu">
             <h2>Our menu</h2>
+
             {numPizzas > 0 ? (
-                <ul className="pizzas">
-                    {pizzaData.map(function (pizza, index) {
-                        return <Pizza pizzaObj={pizza} key={index} />;
-                    })}
-                </ul>
+                <>
+                    <p>
+                        Authentic Italian cuisine. 6 creative dishes to choose
+                        from. All from our stone oven, all organic, all
+                        delicious.
+                    </p>
+                    <ul className="pizzas">
+                        {pizzaData.map(function (pizza, index) {
+                            return <Pizza pizzaObj={pizza} key={index} />;
+                        })}
+                    </ul>
+                </>
             ) : (
                 <p>
                     We're still working on our menu. Please come back later :)
                 </p>
             )}
         </main>
+    );
+};
+
+const Order = function ({ closeHour }) {
+    return (
+        <div className="order">
+            <p>We'r open until {closeHour}:00. Come visit us or order online</p>
+            <button className="btn">Order</button>
+        </div>
     );
 };
 
@@ -65,13 +82,7 @@ const Footer = function () {
     return (
         <footer className="footer">
             {isOpen ? (
-                <div className="order">
-                    <p>
-                        We'r open until {closeHour}:00. Come visit us or order
-                        online
-                    </p>
-                    <button className="btn">Order</button>
-                </div>
+                <Order closeHour={closeHour} />
             ) : (
                 <p>
                     We're happy to welcome you between {openHour}:00 and{" "}
