@@ -4,10 +4,11 @@ import pizzaData from "./data";
 
 const App = function () {
     return (
-        <div>
-            <h1>Hello Arpit !</h1>
-            <Pizza />
-        </div>
+        <>
+            <Header />
+            <Menu />
+            <Footer />
+        </>
     );
 };
 
@@ -18,6 +19,31 @@ const Pizza = function () {
             <h2>Pizza Spinaci</h2>
             <p>Tomato, mozarella, spinach and ricotta cheese</p>
         </div>
+    );
+};
+
+const Header = function () {
+    return <h1>Fast React Pizza Co.</h1>;
+};
+const Menu = function () {
+    return (
+        <>
+            <h2>Our menu</h2>
+            <Pizza />
+            <Pizza />
+            <Pizza />
+        </>
+    );
+};
+const Footer = function () {
+    const hour = new Date().getHours();
+    const openHour = 12;
+    const closeHour = 22;
+    const isOpen = hour >= openHour && hour <= closeHour;
+    console.log(isOpen);
+
+    return (
+        <footer>{new Date().toLocaleDateString()} We'r Currently Open</footer>
     );
 };
 
