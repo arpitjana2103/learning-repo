@@ -85,7 +85,7 @@ const Footer = function () {
                 <Order closeHour={closeHour} />
             ) : (
                 <p>
-                    We're happy to welcome you between {openHour}:00 and{" "}
+                    We're happy to welcome you between {openHour}:00 and
                     {closeHour}:00.
                 </p>
             )}
