@@ -11,7 +11,7 @@ function getDate(count) {
 }
 
 function getMessage(count) {
-  if (count == 0) return "Today is : ";
+  if (count === 0) return "Today is : ";
   if (count > 0) return `${count} days from today is : `;
   if (count < 0) return `${-count} days ago was : `;
 }
