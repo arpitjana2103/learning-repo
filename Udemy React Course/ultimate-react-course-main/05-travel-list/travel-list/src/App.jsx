@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const initialItems = [
   { id: 1, description: "Passports", quantity: 2, packed: false },
   { id: 2, description: "Socks", quantity: 12, packed: false },
@@ -26,15 +28,33 @@ function Logo() {
 }
 
 function Form() {
+  const [description, setDescription] = useState("");
+  const [itemCount, setItemCount] = useState(1);
+
   function handleSubmit(e) {
     e.preventDefault();
+    if (!description) return;
+    const newItem = {
+      description,
+      quantity: itemCount,
+      packed: false,
+      id: Date.now(),
+    };
+
+    initialItems.push(newItem);
+
+    setItemCount(1);
+    setDescription("");
   }
   return (
     <form className="add-form" onSubmit={handleSubmit}>
       <h3>
         What do you need for your <span className="emoji">😍</span> trip ?
       </h3>
-      <select>
+      <select
+        value={itemCount}
+        onChange={(e) => setItemCount(Number(e.target.value))}
+      >
         {new Array(20)
           .fill(1)
           .map((ele, i) => ele + i)
@@ -46,7 +66,13 @@ function Form() {
             );
           })}
       </select>
-      <input type="text" placeholder="Item..." required />
+      <input
+        type="text"
+        placeholder="Item..."
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        required
+      />
       <button>Add</button>
     </form>
   );
