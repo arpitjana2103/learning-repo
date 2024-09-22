@@ -33,7 +33,7 @@ const path = require("path");
 // SERVER
 const contentTypeTxt = { "Content-type": "text/plain" };
 const contentTypeJson = { "Content-type": "application/json" };
-const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+const dataObj = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 
 const server = http.createServer(function (req, res) {
     const pathName = req.url;
@@ -52,7 +52,7 @@ const server = http.createServer(function (req, res) {
 
         case "/api":
             res.writeHead(200, contentTypeJson);
-            res.end(data);
+            res.end(dataObj);
             break;
 
         default:
