@@ -32,8 +32,42 @@ const path = require("path");
 /////////////////////////////////
 // SERVER
 const contentTypeTxt = { "Content-type": "text/plain" };
+const contentTypeHtml = { "Content-type": "text/html" };
 const contentTypeJson = { "Content-type": "application/json" };
-const dataObj = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+
+const dataPath = `${__dirname}/dev-data/data.json`;
+const templateOverviewPath = `${__dirname}/templates/template-overview.html`;
+const templateCardPath = `${__dirname}/templates/template-card.html`;
+const templateProductPath = `${__dirname}/templates/template-product.html`;
+
+const templateOverview = fs.readFileSync(templateOverviewPath, "utf-8");
+const templateCard = fs.readFileSync(templateCardPath, "utf-8");
+const templateProduct = fs.readFileSync(templateProductPath, "utf-8");
+
+const data = fs.readFileSync(dataPath, "utf-8");
+const dataObj = JSON.parse(data);
+
+// HELPER FUNCTIONS
+const replaceTemplate = function (str, product) {
+    return str
+        .replaceAll(
+            "[[PRODUCT_IS_ORGANIC]]",
+            `${product.organic ? "org" : "not-org"}`
+        )
+        .replaceAll("[[PRODUCT_IMAGE]]", product.image)
+        .replaceAll("[[PRODUCT_NAME]]", product.name)
+        .replaceAll("[[PRODUCT_FROM]]", product.from)
+        .replaceAll("[[PRODUCT_NUTRIENTS]]", product.nutrients)
+        .replaceAll("[[PRODUCT_PRICE]]", product.price)
+        .replaceAll("[[PRODUCT_DESCRIPTION]]", product.description)
+        .replaceAll("[[PRODUCT_QUANTITY]]", product.quantity);
+};
+
+const getCardListHtml = function () {
+    return dataObj.map(function (product) {
+        return replaceTemplate(templateCard, product);
+    });
+};
 
 const server = http.createServer(function (req, res) {
     const pathName = req.url;
@@ -41,8 +75,13 @@ const server = http.createServer(function (req, res) {
     switch (pathName) {
         case "/":
         case "/overview":
-            res.writeHead(200, contentTypeTxt);
-            res.end("This is the OverView");
+            const cardListHtml = getCardListHtml();
+            const overViewHtml = templateOverview.replaceAll(
+                "[[PRODUCT_CARD_LIST]]",
+                cardListHtml
+            );
+            res.writeHead(200, contentTypeHtml);
+            res.end(overViewHtml);
             break;
 
         case "/product":
@@ -52,7 +91,7 @@ const server = http.createServer(function (req, res) {
 
         case "/api":
             res.writeHead(200, contentTypeJson);
-            res.end(dataObj);
+            res.end(data);
             break;
 
         default:
