@@ -1,6 +1,8 @@
 const fs = require("fs");
 const http = require("http");
 const url = require("url");
+const slugify = require("slugify");
+const { replaceTemplate } = require("./modules/replaceTemplate");
 
 /////////////////////////////////
 // FILES
@@ -48,21 +50,6 @@ const data = fs.readFileSync(dataPath, "utf-8");
 const dataObj = JSON.parse(data);
 
 // HELPER FUNCTIONS
-const replaceTemplate = function (str, product) {
-    return str
-        .replaceAll(
-            "[[PRODUCT_IS_ORGANIC]]",
-            `${product.organic ? "org" : "not-org"}`
-        )
-        .replaceAll("[[PRODUCT_IMAGE]]", product.image)
-        .replaceAll("[[PRODUCT_NAME]]", product.name)
-        .replaceAll("[[PRODUCT_FROM]]", product.from)
-        .replaceAll("[[PRODUCT_NUTRIENTS]]", product.nutrients)
-        .replaceAll("[[PRODUCT_PRICE]]", product.price)
-        .replaceAll("[[PRODUCT_DESCRIPTION]]", product.description)
-        .replaceAll("[[PRODUCT_QUANTITY]]", product.quantity)
-        .replaceAll("[[PRODUCT_ID]]", product.id);
-};
 
 const getCardListHtml = function () {
     return dataObj.map(function (product) {
@@ -70,8 +57,9 @@ const getCardListHtml = function () {
     });
 };
 
+console.log(slugify("Fresh Avocaods", { lower: true }));
+
 const server = http.createServer(function (req, res) {
-    console.log(url.parse(req.url, true));
     const { query, pathname } = url.parse(req.url, true);
 
     switch (pathname) {
