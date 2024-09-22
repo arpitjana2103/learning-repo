@@ -1,6 +1,6 @@
 const fs = require("fs");
 const http = require("http");
-const path = require("path");
+const url = require("url");
 
 /////////////////////////////////
 // FILES
@@ -60,7 +60,8 @@ const replaceTemplate = function (str, product) {
         .replaceAll("[[PRODUCT_NUTRIENTS]]", product.nutrients)
         .replaceAll("[[PRODUCT_PRICE]]", product.price)
         .replaceAll("[[PRODUCT_DESCRIPTION]]", product.description)
-        .replaceAll("[[PRODUCT_QUANTITY]]", product.quantity);
+        .replaceAll("[[PRODUCT_QUANTITY]]", product.quantity)
+        .replaceAll("[[PRODUCT_ID]]", product.id);
 };
 
 const getCardListHtml = function () {
@@ -70,9 +71,10 @@ const getCardListHtml = function () {
 };
 
 const server = http.createServer(function (req, res) {
-    const pathName = req.url;
+    console.log(url.parse(req.url, true));
+    const { query, pathname } = url.parse(req.url, true);
 
-    switch (pathName) {
+    switch (pathname) {
         case "/":
         case "/overview":
             const cardListHtml = getCardListHtml();
@@ -85,8 +87,11 @@ const server = http.createServer(function (req, res) {
             break;
 
         case "/product":
-            res.writeHead(200, contentTypeTxt);
-            res.end("This is the PRODUCT");
+            console.log(query);
+            const product = dataObj[query.id];
+            const productHtml = replaceTemplate(templateProduct, product);
+            res.writeHead(200, contentTypeHtml);
+            res.end(productHtml);
             break;
 
         case "/api":
