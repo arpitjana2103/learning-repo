@@ -87,7 +87,7 @@ const server = http.createServer(function (req, res) {
             break;
 
         default:
-            res.writeHead(404, contentTypeTxt);
+            res.writeHead(404, contentTypeHtml);
             res.end("<h1>Page not found !!</h1>");
             break;
     }
