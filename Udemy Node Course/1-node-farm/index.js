@@ -56,6 +56,11 @@ const getCardListHtml = function () {
     });
 };
 
+const getOverviewHtml = function () {
+    const cardListHtml = getCardListHtml();
+    return templateOverview.replaceAll("[[PRODUCT_CARD_LIST]]", cardListHtml);
+};
+
 console.log(slugify("Fresh Avocaods", { lower: true }));
 
 const server = http.createServer(function (req, res) {
@@ -64,17 +69,12 @@ const server = http.createServer(function (req, res) {
     switch (pathname) {
         case "/":
         case "/overview":
-            const cardListHtml = getCardListHtml();
-            const overViewHtml = templateOverview.replaceAll(
-                "[[PRODUCT_CARD_LIST]]",
-                cardListHtml
-            );
+            const overViewHtml = getOverviewHtml();
             res.writeHead(200, contentTypeHtml);
             res.end(overViewHtml);
             break;
 
         case "/product":
-            console.log(query);
             const product = dataObj[query.id];
             const productHtml = replaceTemplate(templateProduct, product);
             res.writeHead(200, contentTypeHtml);
