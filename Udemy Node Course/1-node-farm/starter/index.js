@@ -50,7 +50,6 @@ const data = fs.readFileSync(dataPath, "utf-8");
 const dataObj = JSON.parse(data);
 
 // HELPER FUNCTIONS
-
 const getCardListHtml = function () {
     return dataObj.map(function (product) {
         return replaceTemplate(templateCard, product);
