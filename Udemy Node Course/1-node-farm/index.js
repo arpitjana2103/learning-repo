@@ -63,9 +63,11 @@ const getOverviewHtml = function () {
 
 console.log(slugify("Fresh Avocaods", { lower: true }));
 
-const server = http.createServer(function (req, res) {
-    const { query, pathname } = url.parse(req.url, true);
+const server = http.createServer();
 
+// Listening for the "request" event
+server.on("request", function (req, res) {
+    const { query, pathname } = url.parse(req.url, true);
     switch (pathname) {
         case "/":
         case "/overview":
