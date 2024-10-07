@@ -64,15 +64,6 @@ const Menu = function () {
     );
 };
 
-const Order = function ({ closeHour }) {
-    return (
-        <div className="order">
-            <p>We'r open until {closeHour}:00. Come visit us or order online</p>
-            <button className="btn">Order</button>
-        </div>
-    );
-};
-
 const Footer = function () {
     const hour = new Date().getHours();
     const openHour = 9;
@@ -90,6 +81,15 @@ const Footer = function () {
                 </p>
             )}
         </footer>
+    );
+};
+
+const Order = function ({ closeHour }) {
+    return (
+        <div className="order">
+            <p>We'r open until {closeHour}:00. Come visit us or order online</p>
+            <button className="btn">Order</button>
+        </div>
     );
 };
 
