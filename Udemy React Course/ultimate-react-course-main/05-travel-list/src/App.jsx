@@ -29,16 +29,32 @@ function App() {
     }
 
     function handleDeleteItem(id) {
-        return function () {
-            return setItems((items) => items.filter((item) => item.id !== id));
-        };
+        return setItems(function (items) {
+            return items.filter(function (item) {
+                return item.id !== id;
+            });
+        });
+    }
+
+    function handleToggleItem(id) {
+        return setItems(function (items) {
+            return items.map(function (item) {
+                return item.id === id
+                    ? { ...item, packed: !item.packed }
+                    : item;
+            });
+        });
     }
 
     return (
         <div className="app">
             <Logo />
             <Form onAddItems={handleAddItem} />
-            <PackingList items={items} onDeleteItem={handleDeleteItem} />
+            <PackingList
+                items={items}
+                onDeleteItem={handleDeleteItem}
+                onToggleItem={handleToggleItem}
+            />
             <Stats />
         </div>
     );
@@ -107,7 +123,7 @@ function Form({ onAddItems }) {
     );
 }
 
-function PackingList({ items, onDeleteItem }) {
+function PackingList({ items, onDeleteItem, onToggleItem }) {
     return (
         <div className="list">
             <ul>
@@ -117,6 +133,7 @@ function PackingList({ items, onDeleteItem }) {
                             item={item}
                             key={item.id}
                             onDeleteItem={onDeleteItem}
+                            onToggleItem={onToggleItem}
                         />
                     );
                 })}
@@ -125,14 +142,21 @@ function PackingList({ items, onDeleteItem }) {
     );
 }
 
-function Item({ item, onDeleteItem }) {
+function Item({ item, onDeleteItem, onToggleItem }) {
     return (
         <li>
+            <input
+                type="checkbox"
+                checked={item.packed}
+                onChange={() => onToggleItem(item.id)}
+            />
             <span style={item.packed ? { textDecoration: "line-through" } : {}}>
                 {item.quantity} {item.description}
             </span>
-            <button onClick={onDeleteItem(item.id)}>
-                <span className="emoji">❌</span>
+            <button>
+                <span className="emoji" onClick={() => onDeleteItem(item.id)}>
+                    ❌
+                </span>
             </button>
         </li>
     );
