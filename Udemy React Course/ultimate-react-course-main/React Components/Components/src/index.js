@@ -45,9 +45,9 @@ root.render(
             </TextExpander>
 
             <TextExpander
-                collapsedNumWords={20}
-                expandButtonText="Show text"
-                collapseButtonText="Collapse text"
+                collapsedNumWords={10}
+                expandButtonText="show text"
+                collapseButtonText="collapse text"
                 buttonColor="#ff6622"
             >
                 Space travel requires some seriously amazing technology and
@@ -62,7 +62,7 @@ root.render(
                 Space missions have given us incredible insights into our
                 universe and have inspired future generations to keep reaching
                 for the stars. Space travel is a pretty cool thing to think
-                about. Who knows what we'll discover next!
+                about. Who knows what we'll discover next
             </TextExpander>
         </Container>
     </React.StrictMode>
