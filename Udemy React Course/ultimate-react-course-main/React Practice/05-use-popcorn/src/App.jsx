@@ -204,16 +204,32 @@ export default function App() {
     const [movies, setMovies] = useState([]);
     const [watched, setWatched] = useState(tempWatchedData);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
 
-    const query = "life";
+    const query = "ArpitJana2103";
 
     useEffect(function () {
         async function fetchMovies(query) {
-            setIsLoading(true);
-            const res = await fetch(`${API_URL}&s=${query}`);
-            const data = await res.json();
-            setMovies(data.Search || []);
-            setIsLoading(false);
+            try {
+                setIsLoading(true);
+                const res = await fetch(`${API_URL}&s=${query}`);
+
+                if (!res.ok)
+                    throw new Error(
+                        "Something went wrong with fetching movies"
+                    );
+
+                const data = await res.json();
+
+                if (data.Response === "False")
+                    throw new Error("No movie found !");
+
+                setMovies(data.Search || []);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
+            }
         }
         fetchMovies(query);
     }, []);
@@ -227,7 +243,9 @@ export default function App() {
 
             <Main>
                 <Box>
-                    {isLoading ? <Loader /> : <MovieList movies={movies} />}
+                    {isLoading && <Loader />}
+                    {!isLoading && !error && <MovieList movies={movies} />}
+                    {error && <ErrorMessage message={error} />}
                 </Box>
 
                 <Box>
@@ -241,4 +259,14 @@ export default function App() {
 
 function Loader() {
     return <p className="loader">Loading...</p>;
+}
+
+function ErrorMessage({ message }) {
+    return (
+        <p className="error">
+            <span>
+                <Emoji txt="💢" /> {message}
+            </span>
+        </p>
+    );
 }
