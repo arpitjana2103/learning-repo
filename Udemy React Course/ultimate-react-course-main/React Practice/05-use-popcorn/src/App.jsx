@@ -201,16 +201,19 @@ const KEY = "276bfff3";
 const API_URL = `http://www.omdbapi.com/?apikey=${KEY}`;
 
 export default function App() {
-    const [movies, setMovies] = useState(tempMovieData);
+    const [movies, setMovies] = useState([]);
     const [watched, setWatched] = useState(tempWatchedData);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const query = "home";
+    const query = "life";
 
     useEffect(function () {
         async function fetchMovies(query) {
+            setIsLoading(true);
             const res = await fetch(`${API_URL}&s=${query}`);
             const data = await res.json();
-            setMovies(data.Search);
+            setMovies(data.Search || []);
+            setIsLoading(false);
         }
         fetchMovies(query);
     }, []);
@@ -224,7 +227,7 @@ export default function App() {
 
             <Main>
                 <Box>
-                    <MovieList movies={movies} />
+                    {isLoading ? <Loader /> : <MovieList movies={movies} />}
                 </Box>
 
                 <Box>
@@ -234,4 +237,8 @@ export default function App() {
             </Main>
         </>
     );
+}
+
+function Loader() {
+    return <p className="loader">Loading...</p>;
 }
