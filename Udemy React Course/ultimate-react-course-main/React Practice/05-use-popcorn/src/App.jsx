@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import StarRating from "./StarRating";
 
 const tempMovieData = [
     {
@@ -45,8 +46,8 @@ const tempWatchedData = [
 const average = (arr) =>
     arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-function Emoji({ txt }) {
-    return <span className="emoji">{txt}</span>;
+function Emoji({ txt, color = false }) {
+    return <span className={color ? "emoji-color" : "emoji"}>{txt}</span>;
 }
 
 function Logo() {
@@ -104,9 +105,9 @@ function Box({ children }) {
     );
 }
 
-function Movie({ movie }) {
+function Movie({ movie, onSelectMovie }) {
     return (
-        <li key={movie.imdbID}>
+        <li key={movie.imdbID} onClick={() => onSelectMovie(movie.imdbID)}>
             <img src={movie.Poster} alt={`${movie.Title} poster`} />
             <h3>{movie.Title}</h3>
             <div>
@@ -119,11 +120,15 @@ function Movie({ movie }) {
     );
 }
 
-function MovieList({ movies }) {
+function MovieList({ movies, onSelectMovie }) {
     return (
-        <ul className="list">
+        <ul className="list list-movies">
             {movies?.map((movie) => (
-                <Movie movie={movie} />
+                <Movie
+                    onSelectMovie={onSelectMovie}
+                    movie={movie}
+                    key={movie.imdbID}
+                />
             ))}
         </ul>
     );
@@ -200,11 +205,20 @@ const KEY = "276bfff3";
 const API_URL = `http://www.omdbapi.com/?apikey=${KEY}`;
 
 export default function App() {
+    const [selectedId, setSelectedId] = useState(null);
     const [query, setQuery] = useState("hero");
     const [movies, setMovies] = useState([]);
     const [watched, setWatched] = useState(tempWatchedData);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
+
+    function handleSelectMovie(id) {
+        setSelectedId((currId) => (id === currId ? null : id));
+    }
+
+    function handleCloseMovie() {
+        setSelectedId(null);
+    }
 
     useEffect(
         function () {
@@ -223,7 +237,6 @@ export default function App() {
 
                     if (data.Response === "False")
                         throw new Error("No movie found !");
-
                     setMovies(data.Search || []);
                 } catch (error) {
                     setError(error.message);
@@ -251,13 +264,27 @@ export default function App() {
             <Main>
                 <Box>
                     {isLoading && <Loader />}
-                    {!isLoading && !error && <MovieList movies={movies} />}
+                    {!isLoading && !error && (
+                        <MovieList
+                            onSelectMovie={handleSelectMovie}
+                            movies={movies}
+                        />
+                    )}
                     {error && <ErrorMessage message={error} />}
                 </Box>
 
                 <Box>
-                    <WatchedSummery watched={watched} />
-                    <WatchedMovieList watched={watched} />
+                    {selectedId ? (
+                        <MovieDetails
+                            onCloseMovie={handleCloseMovie}
+                            selectedId={selectedId}
+                        />
+                    ) : (
+                        <>
+                            <WatchedSummery watched={watched} />
+                            <WatchedMovieList watched={watched} />
+                        </>
+                    )}
                 </Box>
             </Main>
         </>
@@ -272,8 +299,81 @@ function ErrorMessage({ message }) {
     return (
         <p className="error">
             <span>
-                <Emoji txt="💢" /> {message}
+                <Emoji txt="🚫" color={true} /> {message}
             </span>
         </p>
+    );
+}
+
+function MovieDetails({ selectedId, onCloseMovie }) {
+    const [movie, setMovie] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+
+    const {
+        Title: title,
+        Year: year,
+        Poster: poster,
+        Runtime: runtime,
+        imdbRating,
+        Plot: plot,
+        Released: released,
+        Actors: actors,
+        Director: director,
+        Genre: genre,
+    } = movie;
+
+    useEffect(
+        function () {
+            async function getMovieDetails() {
+                setIsLoading(true);
+                const res = await fetch(`${API_URL}&i=${selectedId}`);
+                const data = await res.json();
+                setMovie(data);
+                setIsLoading(false);
+            }
+            getMovieDetails();
+        },
+        [selectedId]
+    );
+
+    return (
+        <div className="details">
+            {isLoading ? (
+                <Loader />
+            ) : (
+                <>
+                    <header>
+                        <button className="btn-back" onClick={onCloseMovie}>
+                            back
+                        </button>
+                        <img src={poster} alt={`Poster of ${movie} movie`} />
+                        <div className="details-overview">
+                            <h2>{title}</h2>
+                            <p>
+                                {released} &bull; {runtime}
+                            </p>
+                            <p>{genre}</p>
+                            <p>
+                                <span>
+                                    <Emoji color={true} txt="⭐" />
+                                </span>
+                                {imdbRating} IMDB rating
+                            </p>
+                        </div>
+                    </header>
+                    <section>
+                        <div className="rating">
+                            <StarRating maxRating={10} size={24} />
+                        </div>
+
+                        <p>
+                            <em>{plot}</em>
+                        </p>
+                        <p>Starring by {actors}</p>
+                        <p>Directed by {director}</p>
+                    </section>
+                </>
+            )}
+        </div>
     );
 }
