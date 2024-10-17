@@ -50,6 +50,23 @@ export default function MovieDetails({
 
     useEffect(
         function () {
+            function handleKeyPress(e) {
+                if (e.code === "Escape") {
+                    onCloseMovie();
+                    console.log("Closing Movie");
+                }
+            }
+            document.addEventListener("keydown", handleKeyPress);
+
+            return function () {
+                document.removeEventListener("keydown", handleKeyPress);
+            };
+        },
+        [onCloseMovie]
+    );
+
+    useEffect(
+        function () {
             if (!title) return;
             document.title = `Movie | ${title}`;
 
