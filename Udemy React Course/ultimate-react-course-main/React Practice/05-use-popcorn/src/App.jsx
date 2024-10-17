@@ -56,7 +56,7 @@ function Logo() {
             <span role="img">
                 <Emoji txt="🍿" />
             </span>
-            <h1>usePopcorn</h1>
+            <h1>POPCON</h1>
         </div>
     );
 }
@@ -112,7 +112,9 @@ function Movie({ movie, onSelectMovie }) {
             <h3>{movie.Title}</h3>
             <div>
                 <p>
-                    <span>🗓</span>
+                    <span>
+                        <Emoji txt="🗓" />
+                    </span>
                     <span>{movie.Year}</span>
                 </p>
             </div>
@@ -135,63 +137,92 @@ function MovieList({ movies, onSelectMovie }) {
 }
 
 function WatchedSummery({ watched }) {
-    const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
-    const avgUserRating = average(watched.map((movie) => movie.userRating));
-    const avgRuntime = average(watched.map((movie) => movie.runtime));
+    const avgImdbRating = average(
+        Object.values(watched).map((movie) => movie.imdbRating)
+    );
+    const avgUserRating = average(
+        Object.values(watched).map((movie) => movie.userRating)
+    );
+    const avgRuntime = average(
+        Object.values(watched).map((movie) => movie.runtime)
+    );
 
     return (
         <div className="summary">
             <h2>Movies you watched</h2>
             <div>
                 <p>
-                    <span>#️⃣</span>
-                    <span>{watched.length} movies</span>
+                    <span>
+                        <Emoji txt="✌️" color={true} />
+                    </span>
+                    <span>{watched.length}</span>
                 </p>
                 <p>
-                    <span>⭐️</span>
-                    <span>{avgImdbRating}</span>
+                    <span>
+                        <Emoji txt="⭐️" color={true} />
+                    </span>
+                    <span>{avgImdbRating.toFixed(1)}</span>
                 </p>
                 <p>
-                    <span>🌟</span>
-                    <span>{avgUserRating}</span>
+                    <span>
+                        <Emoji txt="🌟" color={true} />
+                    </span>
+                    <span>{avgUserRating.toFixed(1)}</span>
                 </p>
                 <p>
-                    <span>⏳</span>
-                    <span>{avgRuntime} min</span>
+                    <span>
+                        <Emoji txt="⏳" color={true} />
+                    </span>
+                    <span>{avgRuntime.toFixed(0)} min</span>
                 </p>
             </div>
         </div>
     );
 }
 
-function WatchedMovie({ movie }) {
+function WatchedMovie({ movie, onRemoveWatched }) {
     return (
-        <li key={movie.imdbID}>
-            <img src={movie.Poster} alt={`${movie.Title} poster`} />
-            <h3>{movie.Title}</h3>
+        <li>
+            <img src={movie.poster} alt={`${movie.title} poster`} />
+            <h3>{movie.title}</h3>
             <div>
                 <p>
-                    <span>⭐️</span>
+                    <span>
+                        <Emoji txt="⭐️" />
+                    </span>
                     <span>{movie.imdbRating}</span>
                 </p>
                 <p>
-                    <span>🌟</span>
+                    <span>
+                        <Emoji txt="🌟" />
+                    </span>
                     <span>{movie.userRating}</span>
                 </p>
                 <p>
-                    <span>⏳</span>
+                    <Emoji txt="⏳" />
                     <span>{movie.runtime} min</span>
                 </p>
+                <button
+                    className="btn-delete"
+                    onClick={() => onRemoveWatched(movie.imdbID)}
+                >
+                    x
+                </button>
             </div>
         </li>
     );
 }
 
-function WatchedMovieList({ watched }) {
+function WatchedMovieList({ watched, onRemoveWatched }) {
+    console.log(watched);
     return (
         <ul className="list">
-            {watched.map((movie) => (
-                <WatchedMovie movie={movie} />
+            {Object.values(watched).map((movie) => (
+                <WatchedMovie
+                    movie={movie}
+                    key={movie.imdbID}
+                    onRemoveWatched={onRemoveWatched}
+                />
             ))}
         </ul>
     );
@@ -208,7 +239,7 @@ export default function App() {
     const [selectedId, setSelectedId] = useState(null);
     const [query, setQuery] = useState("hero");
     const [movies, setMovies] = useState([]);
-    const [watched, setWatched] = useState(tempWatchedData);
+    const [watched, setWatched] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -218,6 +249,20 @@ export default function App() {
 
     function handleCloseMovie() {
         setSelectedId(null);
+    }
+
+    function handleAddWatched(movie) {
+        return setWatched((watched) => {
+            watched[movie.imdbID] = movie;
+            return { ...watched };
+        });
+    }
+
+    function handleRemoveWatched(id) {
+        return setWatched((watched) => {
+            delete watched[id];
+            return { ...watched };
+        });
     }
 
     useEffect(
@@ -278,11 +323,18 @@ export default function App() {
                         <MovieDetails
                             onCloseMovie={handleCloseMovie}
                             selectedId={selectedId}
+                            onAddWatched={handleAddWatched}
+                            onRemoveWatched={handleRemoveWatched}
+                            watched={watched}
+                            key={selectedId}
                         />
                     ) : (
                         <>
                             <WatchedSummery watched={watched} />
-                            <WatchedMovieList watched={watched} />
+                            <WatchedMovieList
+                                watched={watched}
+                                onRemoveWatched={handleRemoveWatched}
+                            />
                         </>
                     )}
                 </Box>
@@ -305,9 +357,19 @@ function ErrorMessage({ message }) {
     );
 }
 
-function MovieDetails({ selectedId, onCloseMovie }) {
+function MovieDetails({
+    selectedId,
+    onCloseMovie,
+    onAddWatched,
+    watched,
+    onRemoveWatched,
+}) {
     const [movie, setMovie] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const isWatched = watched[selectedId] ? true : false;
+    const [userRating, setUserRating] = useState(
+        isWatched ? watched[selectedId].userRating : 0
+    );
 
     const {
         Title: title,
@@ -321,6 +383,23 @@ function MovieDetails({ selectedId, onCloseMovie }) {
         Director: director,
         Genre: genre,
     } = movie;
+
+    function handleAdd() {
+        const newMovie = {
+            imdbID: selectedId,
+            title: title,
+            year: year,
+            poster: poster,
+            imdbRating: Number(imdbRating).toFixed(1),
+            runtime: Number(runtime.split(" ").at(0)),
+            userRating: Number(userRating).toFixed(1),
+        };
+        onAddWatched(newMovie);
+    }
+
+    function handleRemove() {
+        onRemoveWatched(movie.imdbID);
+    }
 
     useEffect(
         function () {
@@ -363,7 +442,24 @@ function MovieDetails({ selectedId, onCloseMovie }) {
                     </header>
                     <section>
                         <div className="rating">
-                            <StarRating maxRating={10} size={24} />
+                            <StarRating
+                                maxRating={10}
+                                size={24}
+                                onSetRating={setUserRating}
+                                defaultRating={+userRating}
+                            />
+                            {userRating > 0 && (
+                                <button
+                                    className="btn-add"
+                                    onClick={
+                                        isWatched ? handleRemove : handleAdd
+                                    }
+                                >
+                                    {isWatched
+                                        ? "x Remove from Watchlist"
+                                        : "+ Add to Watchlist"}
+                                </button>
+                            )}
                         </div>
 
                         <p>

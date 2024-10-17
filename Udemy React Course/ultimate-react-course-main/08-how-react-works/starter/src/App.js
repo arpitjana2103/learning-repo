@@ -65,9 +65,11 @@ function Tab({ num, activeTab, onClick }) {
   );
 }
 
-function TabContent({ item }) {
+function TabContent({ item, key }) {
   const [showDetails, setShowDetails] = useState(true);
   const [likes, setLikes] = useState(0);
+
+  console.log("key", key);
 
   function handleInc() {
     setLikes(likes + 1);
