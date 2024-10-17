@@ -31,28 +31,24 @@ body {
     padding: 2.4rem;
 }
 
-/* ******* */
-/* width */
-::-webkit-scrollbar {
+/* ******* SCROLL BAR STYLLING */
+/* ::-webkit-scrollbar {
     width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
     background: var(--color-background-500);
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
     cursor: pointer;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 5rem;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.15);
-}
+} */
 /* ******* */
 
 .nav-bar {
@@ -79,6 +75,7 @@ body {
     background-color: var(--color-background-500);
     border-radius: 0.9rem;
     overflow-y: scroll;
+    scrollbar-width: thin;
     position: relative;
 }
 

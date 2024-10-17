@@ -50,6 +50,18 @@ export default function MovieDetails({
 
     useEffect(
         function () {
+            if (!title) return;
+            document.title = `Movie | ${title}`;
+
+            return function () {
+                document.title = "POPCON";
+            };
+        },
+        [title]
+    );
+
+    useEffect(
+        function () {
             async function getMovieDetails() {
                 setIsLoading(true);
                 const res = await fetch(`${API_URL}&i=${selectedId}`);
@@ -103,7 +115,7 @@ export default function MovieDetails({
                                     }
                                 >
                                     {isWatched
-                                        ? "x Remove from Watchlist"
+                                        ? "Remove from Watchlist"
                                         : "+ Add to Watchlist"}
                                 </button>
                             )}
