@@ -22,7 +22,7 @@ export default function WatchedSummery({ watched }) {
                     <span>
                         <Emoji txt="✌️" color={true} />
                     </span>
-                    <span>{watched.length}</span>
+                    <span>{Object.keys(watched).length}</span>
                 </p>
                 <p>
                     <span>

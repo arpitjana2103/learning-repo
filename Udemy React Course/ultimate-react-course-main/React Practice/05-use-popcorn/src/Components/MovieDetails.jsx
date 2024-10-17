@@ -15,7 +15,7 @@ export default function MovieDetails({
     const [isLoading, setIsLoading] = useState(false);
     const isWatched = watched[selectedId] ? true : false;
     const [userRating, setUserRating] = useState(
-        isWatched ? watched[selectedId].userRating : 0
+        watched[selectedId]?.userRating || 0
     );
 
     const {
@@ -39,7 +39,7 @@ export default function MovieDetails({
             poster: poster,
             imdbRating: Number(imdbRating).toFixed(1),
             runtime: Number(runtime.split(" ").at(0)),
-            userRating: Number(userRating).toFixed(1),
+            userRating: userRating,
         };
         onAddWatched(newMovie);
     }
