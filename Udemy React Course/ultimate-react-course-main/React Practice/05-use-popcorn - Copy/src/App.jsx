@@ -11,6 +11,7 @@ import MovieList from "./Components/MovieList";
 import WatchedSummery from "./Components/WatchSummery";
 import WatchedMovieList from "./Components/WatchedMovieList";
 import { useMovies } from "./Hooks/useMovies";
+import { useLocalStorage } from "./Hooks/useLocalStorage";
 
 const KEY = "276bfff3";
 export const API_URL = `http://www.omdbapi.com/?apikey=${KEY}`;
@@ -19,10 +20,7 @@ export default function App() {
     const [selectedId, setSelectedId] = useState(null);
     const [query, setQuery] = useState("hero");
     const { movies, isLoading, error } = useMovies(query);
-
-    const [watched, setWatched] = useState(function () {
-        return JSON.parse(localStorage.getItem("watched")) || {};
-    });
+    const [watched, setWatched] = useLocalStorage({}, "watched");
 
     function handleSelectMovie(id) {
         setSelectedId((currId) => (id === currId ? null : id));
@@ -44,13 +42,6 @@ export default function App() {
             return { ...watched };
         });
     }
-
-    useEffect(
-        function () {
-            localStorage.setItem("watched", JSON.stringify(watched));
-        },
-        [watched]
-    );
 
     return (
         <>
