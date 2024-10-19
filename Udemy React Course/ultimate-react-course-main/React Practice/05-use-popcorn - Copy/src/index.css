@@ -274,15 +274,15 @@ h2 {
     display: flex;
 }
 
-.details header img {
-    width: 50%;
-}
-
 .details section {
     padding: 4rem;
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
+}
+
+.details img {
+    width: 33%;
 }
 
 .details-overview {

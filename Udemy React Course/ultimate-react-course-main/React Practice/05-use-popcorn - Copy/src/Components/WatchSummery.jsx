@@ -26,19 +26,19 @@ export default function WatchedSummery({ watched }) {
                 </p>
                 <p>
                     <span>
-                        <Emoji txt="🍅" color={true} />
+                        <Emoji txt="⭐️" color={true} />
                     </span>
                     <span>{avgImdbRating.toFixed(1)}</span>
                 </p>
                 <p>
                     <span>
-                        <Emoji txt="⭐️" color={true} />
+                        <Emoji txt="🌟" color={true} />
                     </span>
                     <span>{avgUserRating.toFixed(1)}</span>
                 </p>
                 <p>
                     <span>
-                        <Emoji txt="🕗" color={true} />
+                        <Emoji txt="⏳" color={true} />
                     </span>
                     <span>{avgRuntime.toFixed(0)} min</span>
                 </p>

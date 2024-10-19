@@ -110,9 +110,9 @@ export default function MovieDetails({
                             <p>{genre}</p>
                             <p>
                                 <span>
-                                    <Emoji color={true} txt="🍅" />
+                                    <Emoji color={true} txt="⭐" />
                                 </span>
-                                {imdbRating} Rotten Tomatoes
+                                {imdbRating} IMDB rating
                             </p>
                         </div>
                     </header>

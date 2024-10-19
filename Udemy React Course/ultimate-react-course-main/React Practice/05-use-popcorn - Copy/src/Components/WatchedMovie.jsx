@@ -7,18 +7,18 @@ export default function WatchedMovie({ movie, onRemoveWatched }) {
             <div>
                 <p>
                     <span>
-                        <Emoji txt="🍅" />
+                        <Emoji txt="⭐" />
                     </span>
                     <span>{movie.imdbRating}</span>
                 </p>
                 <p>
                     <span>
-                        <Emoji txt="⭐" />
+                        <Emoji txt="🌟" />
                     </span>
                     <span>{movie.userRating}</span>
                 </p>
                 <p>
-                    <Emoji txt="🕗" />
+                    <Emoji txt="⏳" />
                     <span>{movie.runtime} min</span>
                 </p>
                 <button
