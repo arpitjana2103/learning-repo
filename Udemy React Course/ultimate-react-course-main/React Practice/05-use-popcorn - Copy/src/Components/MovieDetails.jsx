@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { API_URL } from "../App";
 import StarRating from "./StarRating";
 import Loader from "./Loader";
@@ -17,6 +17,7 @@ export default function MovieDetails({
     const [userRating, setUserRating] = useState(
         watched[selectedId]?.userRating || 0
     );
+    const countRef = useRef(0);
 
     const {
         Title: title,
@@ -40,6 +41,7 @@ export default function MovieDetails({
             imdbRating: Number(imdbRating).toFixed(1),
             runtime: Number(runtime.split(" ").at(0)),
             userRating: userRating,
+            countRatingDecisions: countRef.current,
         };
         onAddWatched(newMovie);
     }
@@ -48,6 +50,13 @@ export default function MovieDetails({
         onRemoveWatched(movie.imdbID);
         setUserRating(0);
     }
+
+    useEffect(
+        function () {
+            if (userRating) countRef.current++;
+        },
+        [userRating]
+    );
 
     useEffect(
         function () {
@@ -113,7 +122,7 @@ export default function MovieDetails({
                                 <span>
                                     <Emoji color={true} txt="🍅" />
                                 </span>
-                                {imdbRating} Rotten Tomatoes
+                                {imdbRating} Tomatoes
                             </p>
                         </div>
                     </header>
