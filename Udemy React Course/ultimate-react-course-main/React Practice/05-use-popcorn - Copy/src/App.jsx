@@ -16,9 +16,11 @@ export const API_URL = `http://www.omdbapi.com/?apikey=${KEY}`;
 
 export default function App() {
     const [selectedId, setSelectedId] = useState(null);
-    const [query, setQuery] = useState("");
+    const [query, setQuery] = useState("hero");
     const [movies, setMovies] = useState([]);
-    const [watched, setWatched] = useState({});
+    const [watched, setWatched] = useState(function () {
+        return JSON.parse(localStorage.getItem("watched")) || {};
+    });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -31,9 +33,8 @@ export default function App() {
     }
 
     function handleAddWatched(movie) {
-        return setWatched((watched) => {
-            watched[movie.imdbID] = movie;
-            return { ...watched };
+        setWatched((watched) => {
+            return { ...watched, [movie.imdbID]: movie };
         });
     }
 
@@ -88,6 +89,13 @@ export default function App() {
             };
         },
         [query]
+    );
+
+    useEffect(
+        function () {
+            localStorage.setItem("watched", JSON.stringify(watched));
+        },
+        [watched]
     );
 
     return (

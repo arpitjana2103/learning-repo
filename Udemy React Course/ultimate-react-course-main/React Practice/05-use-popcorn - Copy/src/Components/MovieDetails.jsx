@@ -46,6 +46,7 @@ export default function MovieDetails({
 
     function handleRemove() {
         onRemoveWatched(movie.imdbID);
+        setUserRating(0);
     }
 
     useEffect(
@@ -122,7 +123,8 @@ export default function MovieDetails({
                                 maxRating={10}
                                 size={24}
                                 onSetRating={setUserRating}
-                                defaultRating={+userRating}
+                                defaultRating={userRating}
+                                key={userRating}
                             />
                             {userRating > 0 && (
                                 <button
