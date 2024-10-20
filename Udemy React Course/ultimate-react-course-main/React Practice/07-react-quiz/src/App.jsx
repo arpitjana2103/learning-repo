@@ -1,5 +1,14 @@
-import DateCounter from "./DateCounter";
+import Header from "./Components/Header";
+import Main from "./Components/Main";
 
 export default function App() {
-    return <div></div>;
+    return (
+        <div className="app">
+            <Header />
+            <Main>
+                <p>1/15</p>
+                <p>Questions ?</p>
+            </Main>
+        </div>
+    );
 }
