@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { API_URL } from "../App";
+import { useKey } from "../Hooks/useKey";
 import StarRating from "./StarRating";
 import Loader from "./Loader";
 import Emoji from "./Emoji";
@@ -58,22 +59,7 @@ export default function MovieDetails({
         [userRating]
     );
 
-    useEffect(
-        function () {
-            function handleKeyPress(e) {
-                if (e.code === "Escape") {
-                    onCloseMovie();
-                    console.log("Closing Movie");
-                }
-            }
-            document.addEventListener("keydown", handleKeyPress);
-
-            return function () {
-                document.removeEventListener("keydown", handleKeyPress);
-            };
-        },
-        [onCloseMovie]
-    );
+    useKey("Escase", onCloseMovie);
 
     useEffect(
         function () {
