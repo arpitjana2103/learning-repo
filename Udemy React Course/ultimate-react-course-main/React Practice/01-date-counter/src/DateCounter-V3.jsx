@@ -22,7 +22,7 @@ function reducer(state, action) {
     }
 }
 
-function DateCounter() {
+export function DateCounterV3() {
     const initialState = { count: 0, step: 1 };
     const [{ count, step }, dispatch] = useReducer(reducer, initialState);
 
@@ -76,4 +76,3 @@ function DateCounter() {
         </div>
     );
 }
-export default DateCounter;
