@@ -13,7 +13,7 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "start": "react-scripts start",
+        "start": "concurrently \"react-scripts start\" \"json-server --watch data/questions.json --port 8000\"",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
@@ -36,5 +36,8 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "concurrently": "^9.0.1"
     }
 }
