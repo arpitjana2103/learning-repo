@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import { useState } from "react";
 
 const PostContext = createContext();
@@ -50,4 +50,11 @@ function PostProvider({ children }) {
     );
 }
 
-export { PostProvider, PostContext };
+function usePosts() {
+    const context = useContext(PostContext);
+    if (context === undefined)
+        throw new Error("PostContext used outside of the PostProvider");
+    return context;
+}
+
+export { PostProvider, usePosts };
