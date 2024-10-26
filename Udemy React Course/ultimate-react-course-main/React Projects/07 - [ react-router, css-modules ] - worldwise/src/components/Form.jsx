@@ -54,6 +54,7 @@ function Form() {
 
                     setCityName(data.city || data.locality || "");
                     setCountryName(data.countryName);
+                    setNotes(`This is all about ${data.city}`);
                     setEmoji(convertToEmoji(data.countryCode));
                 } catch (error) {
                     setGeoCodingError(error.message);

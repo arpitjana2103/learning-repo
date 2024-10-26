@@ -13,18 +13,6 @@
       "id": 1
     },
     {
-      "cityName": "Jamshedpur",
-      "country": "India",
-      "emoji": "🇮🇳",
-      "date": "2024-10-26T04:52:38.357Z",
-      "notes": "This a note about Janshedpur",
-      "position": {
-        "lat": "22.78884299258726",
-        "lng": "86.25640869140626"
-      },
-      "id": 2
-    },
-    {
       "cityName": "Devdaha",
       "country": "Nepal",
       "emoji": "🇳🇵",
@@ -61,18 +49,6 @@
       "id": 5
     },
     {
-      "cityName": "Mundwa",
-      "country": "India",
-      "emoji": "🇮🇳",
-      "date": "2024-10-26T04:54:31.793Z",
-      "notes": "This is a note about Mundwa",
-      "position": {
-        "lat": "27.01998400798257",
-        "lng": "73.71826171875001"
-      },
-      "id": 6
-    },
-    {
       "cityName": "Athang Gewog",
       "country": "Bhutan",
       "emoji": "🇧🇹",
@@ -83,6 +59,18 @@
         "lng": "90.24169921875001"
       },
       "id": 7
+    },
+    {
+      "cityName": "Kolkata",
+      "country": "India",
+      "emoji": "🇮🇳",
+      "date": "2024-10-26T06:02:57.980Z",
+      "notes": "This is all about Kolkata",
+      "position": {
+        "lat": "22.669778674332314",
+        "lng": "88.43994140625001"
+      },
+      "id": 8
     }
   ],
   "cities2": []
