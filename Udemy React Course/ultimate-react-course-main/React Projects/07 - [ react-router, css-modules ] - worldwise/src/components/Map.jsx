@@ -12,7 +12,7 @@ import styles from "./Map.module.css";
 import { useCities } from "../contexts/CitiesContext";
 import { useGeoLocation } from "../hooks/useGeolocation";
 import Button from "../components/Button";
-import { useUrlPosition } from "../contexts/useUrlPosition";
+import { useUrlPosition } from "../hooks/useUrlPosition";
 
 const parisLatLng = [21.153676882284522, 79.07032012939455];
 
@@ -52,6 +52,7 @@ function Map() {
                     {isLoadingPosition ? "Loading..." : "Use your position"}
                 </Button>
             )}
+
             <MapContainer
                 className={styles.map}
                 center={mapPosition}
