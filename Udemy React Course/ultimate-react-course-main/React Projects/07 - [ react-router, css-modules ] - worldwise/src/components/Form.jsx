@@ -71,11 +71,11 @@ function Form() {
 
         if (!cityName || !date) return;
         const newCity = {
-            cityName,
-            countryName,
-            emoji,
-            date,
-            notes,
+            cityName: cityName,
+            country: countryName,
+            emoji: emoji,
+            date: date,
+            notes: notes,
             position: { lat, lng },
         };
         await createCity(newCity);

@@ -1,184 +1,88 @@
 {
   "cities": [
     {
-      "cityName": "Lisbon",
-      "country": "Portugal",
-      "emoji": "🇵🇹",
-      "date": "2027-10-31T15:59:59.138Z",
-      "notes": "My favorite city so far!",
-      "position": {
-        "lat": 38.727881642324164,
-        "lng": -9.140900099907554
-      },
-      "id": 73930385
-    },
-    {
-      "cityName": "Madrid",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2027-07-15T08:22:53.976Z",
-      "notes": "",
-      "position": {
-        "lat": 40.46635901755316,
-        "lng": -3.7133789062500004
-      },
-      "id": 17806751
-    },
-    {
-      "cityName": "Madrid2",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2027-07-15T08:22:53.976Z",
-      "notes": "",
-      "position": {
-        "lat": 40.46635901755316,
-        "lng": -3.7133789062500004
-      },
-      "id": 17806758
-    },
-    {
-      "cityName": "Berlin",
-      "country": "Germany",
-      "emoji": "🇩🇪",
-      "date": "2027-02-12T09:24:11.863Z",
-      "notes": "Amazing 😃",
-      "position": {
-        "lat": 52.53586782505711,
-        "lng": 13.376933665713324
-      },
-      "id": 98443197
-    },
-    {
-      "cityName": "Moutonne",
-      "countryName": "France",
-      "emoji": "🇫🇷",
-      "date": "2024-10-26T02:31:42.934Z",
-      "notes": "",
-      "position": {
-        "lat": "46.5286346952717",
-        "lng": "5.559082031250001"
-      },
-      "id": 98443198
-    },
-    {
-      "cityName": "Tieyon",
-      "countryName": "Australia",
-      "emoji": "🇦🇺",
-      "date": "2024-10-26T02:31:42.934Z",
-      "notes": "",
-      "position": {
-        "lat": "-27.44979032978423",
-        "lng": "134.91210937500003"
-      },
-      "id": 98443199
-    },
-    {
-      "cityName": "Xivray-et-Marvoisin",
-      "countryName": "France",
-      "emoji": "🇫🇷",
-      "date": "2024-10-26T02:38:18.282Z",
-      "notes": "",
-      "position": {
-        "lat": "48.86162887697507",
-        "lng": "5.760816430375033"
-      },
-      "id": 98443200
-    },
-    {
-      "cityName": "Kelapur",
-      "countryName": "India",
+      "cityName": "Nagpur",
+      "country": "India",
       "emoji": "🇮🇳",
-      "date": "2024-10-26T02:38:45.542Z",
-      "notes": "",
+      "date": "2024-10-26T04:50:39.544Z",
+      "notes": "This is a note about Nagpur",
       "position": {
-        "lat": "20.2209657795223",
-        "lng": "78.45336914062501"
+        "lat": "21.153676882284522",
+        "lng": "79.07032012939455"
       },
-      "id": 98443201
+      "id": 1
     },
     {
-      "cityName": "Puerto Pinasco",
-      "countryName": "Paraguay",
-      "emoji": "🇵🇾",
-      "date": "2024-10-26T02:39:31.564Z",
-      "notes": "",
+      "cityName": "Jamshedpur",
+      "country": "India",
+      "emoji": "🇮🇳",
+      "date": "2024-10-26T04:52:38.357Z",
+      "notes": "This a note about Janshedpur",
       "position": {
-        "lat": "-23.120153621695614",
-        "lng": "-58.57910156250001"
+        "lat": "22.78884299258726",
+        "lng": "86.25640869140626"
       },
-      "id": 98443202
+      "id": 2
     },
     {
-      "cityName": "Lubniewice",
-      "countryName": "Poland",
-      "emoji": "🇵🇱",
-      "date": "2024-10-26T02:40:37.476Z",
-      "notes": "",
+      "cityName": "Devdaha",
+      "country": "Nepal",
+      "emoji": "🇳🇵",
+      "date": "2024-10-26T04:53:08.130Z",
+      "notes": "This is a note about Devdaha",
       "position": {
-        "lat": "52.5095347703273",
-        "lng": "15.216064453125002"
+        "lat": "27.60323689456203",
+        "lng": "83.55926513671876"
       },
-      "id": 98443203
+      "id": 3
     },
     {
-      "cityName": "Lubniewice",
-      "countryName": "Poland",
-      "emoji": "🇵🇱",
-      "date": "2024-10-26T02:40:37.476Z",
-      "notes": "",
-      "position": {
-        "lat": "52.5095347703273",
-        "lng": "15.216064453125002"
-      },
-      "id": 98443204
-    },
-    {
-      "cityName": "Selcuklu",
-      "countryName": "Turkiye",
-      "emoji": "🇹🇷",
-      "date": "2024-10-26T02:43:44.504Z",
-      "notes": "",
-      "position": {
-        "lat": "38.134556577054134",
-        "lng": "32.80517578125001"
-      },
-      "id": 98443205
-    },
-    {
-      "cityName": "Povoacao",
-      "countryName": "Portugal",
-      "emoji": "🇵🇹",
-      "date": "2024-10-26T02:48:00.740Z",
-      "notes": "Nothing to say",
-      "position": {
-        "lat": "37.76854362092148",
-        "lng": "-25.36605834960938"
-      },
-      "id": 98443206
-    },
-    {
-      "cityName": "Vila Franca do Campo",
-      "countryName": "Portugal",
-      "emoji": "🇵🇹",
-      "date": "2024-10-26T02:49:41.985Z",
-      "notes": "",
-      "position": {
-        "lat": "37.76365837331252",
-        "lng": "-25.42922973632813"
-      },
-      "id": 98443207
-    },
-    {
-      "cityName": "Kasiani",
-      "countryName": "Bangladesh",
+      "cityName": "Boalmari",
+      "country": "Bangladesh",
       "emoji": "🇧🇩",
-      "date": "2024-10-26T02:50:45.214Z",
-      "notes": "",
+      "date": "2024-10-26T04:53:34.170Z",
+      "notes": "This is a note about Boalmari",
       "position": {
-        "lat": "23.178238715576676",
-        "lng": "89.83245849609375"
+        "lat": "23.36242859340884",
+        "lng": "89.747314453125"
       },
-      "id": 98443208
+      "id": 4
+    },
+    {
+      "cityName": "Si That",
+      "country": "Thailand",
+      "emoji": "🇹🇭",
+      "date": "2024-10-26T04:53:54.943Z",
+      "notes": "This is a note about Si That",
+      "position": {
+        "lat": "17.14079039331665",
+        "lng": "103.31542968750001"
+      },
+      "id": 5
+    },
+    {
+      "cityName": "Mundwa",
+      "country": "India",
+      "emoji": "🇮🇳",
+      "date": "2024-10-26T04:54:31.793Z",
+      "notes": "This is a note about Mundwa",
+      "position": {
+        "lat": "27.01998400798257",
+        "lng": "73.71826171875001"
+      },
+      "id": 6
+    },
+    {
+      "cityName": "Athang Gewog",
+      "country": "Bhutan",
+      "emoji": "🇧🇹",
+      "date": "2024-10-26T04:54:54.493Z",
+      "notes": "This is a note about Athang Gewog",
+      "position": {
+        "lat": "27.293689224852407",
+        "lng": "90.24169921875001"
+      },
+      "id": 7
     }
   ],
   "cities2": []

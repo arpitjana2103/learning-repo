@@ -14,7 +14,7 @@ import { useGeoLocation } from "../hooks/useGeolocation";
 import Button from "../components/Button";
 import { useUrlPosition } from "../contexts/useUrlPosition";
 
-const parisLatLng = [48.856613, 2.352222];
+const parisLatLng = [21.153676882284522, 79.07032012939455];
 
 function Map() {
     const { cities } = useCities();

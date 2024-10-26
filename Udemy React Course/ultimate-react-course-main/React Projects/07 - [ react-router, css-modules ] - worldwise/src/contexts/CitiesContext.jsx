@@ -16,7 +16,7 @@ function CitiesProvider({ children }) {
                 const data = await res.json();
                 setCities(data);
             } catch (error) {
-                alert("There was an error loading data..");
+                alert("There was an error in loading cities...");
                 console.log(error);
             } finally {
                 setIsLoading(false);
@@ -31,10 +31,9 @@ function CitiesProvider({ children }) {
             setIsLoading(true);
             const res = await fetch(`${BASE_URL}/cities/${id}`);
             const data = await res.json();
-            // console.log(data);
             setCurrentCity(data);
         } catch (error) {
-            alert("There was an error loading data..");
+            alert("There was an error in getting city...");
             console.log(error);
         } finally {
             setIsLoading(false);
@@ -56,7 +55,25 @@ function CitiesProvider({ children }) {
                 return [...cities, data];
             });
         } catch (error) {
-            alert("There was an error loading data..");
+            alert("There was an error in creating city..");
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    async function deleteCity(id) {
+        try {
+            setIsLoading(true);
+            const res = await fetch(`${BASE_URL}/cities/${id}`, {
+                method: "DELETE",
+            });
+            await res.json();
+            setCities(function (cities) {
+                return cities.filter((city) => city.id !== id);
+            });
+        } catch (error) {
+            alert("There was an error in deleting city..");
             console.log(error);
         } finally {
             setIsLoading(false);
@@ -71,6 +88,7 @@ function CitiesProvider({ children }) {
                 currentCity: currentCity,
                 getCity: getCity,
                 createCity: createCity,
+                deleteCity: deleteCity,
             }}
         >
             {children}

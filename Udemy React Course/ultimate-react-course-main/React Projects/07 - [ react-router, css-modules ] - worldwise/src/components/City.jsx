@@ -56,7 +56,7 @@ function City() {
                     target="_blank"
                     rel="noreferrer"
                 >
-                    Check out {cityName} on Wikipedia &rarr;
+                    More about {cityName} &rarr;
                 </a>
             </div>
 
