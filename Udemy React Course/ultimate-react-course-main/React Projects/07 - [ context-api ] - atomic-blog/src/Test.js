@@ -14,15 +14,22 @@ function SlowComponent() {
     );
 }
 
-export default function Test() {
+function Counter({ children }) {
     const [count, setCount] = useState(0);
     return (
-        <div>
-            <h1>Slow counter?!?</h1>
+        <div style={{ marginTop: "2rem" }}>
             <button onClick={() => setCount((c) => c + 1)}>
-                Increase: {count}
+                (slow counter) Increase : {count}
             </button>
-            <SlowComponent />
+            {children}
         </div>
+    );
+}
+
+export default function Test() {
+    return (
+        <Counter>
+            <SlowComponent />
+        </Counter>
     );
 }

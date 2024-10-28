@@ -58,20 +58,20 @@ function CitiesProvider({ children }) {
     );
 
     useEffect(function () {
-        async function fetchCities() {
-            try {
-                dispatch({ type: "loading" });
-                const res = await fetch(`${BASE_URL}/cities`);
-                const data = await res.json();
-                dispatch({ type: "cities/loaded", payload: data });
-            } catch (error) {
-                alert("There was an error in loading cities...");
-                dispatch({ type: "rejected", payload: error.message });
-            }
-        }
-
         fetchCities();
     }, []);
+
+    async function fetchCities() {
+        try {
+            dispatch({ type: "loading" });
+            const res = await fetch(`${BASE_URL}/cities`);
+            const data = await res.json();
+            dispatch({ type: "cities/loaded", payload: data });
+        } catch (error) {
+            alert("There was an error in loading cities...");
+            dispatch({ type: "rejected", payload: error.message });
+        }
+    }
 
     async function getCity(id) {
         if (+id === currentCity.id) return;
