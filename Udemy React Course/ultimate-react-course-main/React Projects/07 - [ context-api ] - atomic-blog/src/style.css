@@ -89,11 +89,6 @@ main {
     margin-bottom: 40px;
 }
 
-aside {
-    margin-bottom: 40px;
-    opacity: 75%;
-}
-
 input,
 textarea,
 button {
@@ -157,6 +152,10 @@ li {
 
 main li:hover {
     background-color: #fff4e6;
+}
+
+aside {
+    margin-bottom: 40px;
 }
 
 aside ul {
