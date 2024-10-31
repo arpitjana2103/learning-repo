@@ -1,4 +1,4 @@
-const ACCOUNT_ACTION = {
+const ACTION = {
     DEPOSITE: "account/deposite",
     WITHDRAW: "account/withdraw",
     REQUEST_LOAN: "account/requestLoan",
@@ -12,16 +12,16 @@ const intialStateAccount = {
 };
 
 export function deposite(amount) {
-    return { type: ACCOUNT_ACTION.DEPOSITE, payload: amount };
+    return { type: ACTION.DEPOSITE, payload: amount };
 }
 
 export function withdraw(amount) {
-    return { type: ACCOUNT_ACTION.WITHDRAW, payload: amount };
+    return { type: ACTION.WITHDRAW, payload: amount };
 }
 
 export function requestLoan(purpose, amount) {
     return {
-        type: ACCOUNT_ACTION.REQUEST_LOAN,
+        type: ACTION.REQUEST_LOAN,
         payload: {
             amount: amount,
             loanPurpose: purpose,
@@ -31,26 +31,25 @@ export function requestLoan(purpose, amount) {
 
 export function payLoan() {
     return {
-        type: ACCOUNT_ACTION.PAYLOAN,
+        type: ACTION.PAYLOAN,
     };
 }
 
 export default function accountReducer(currState = intialStateAccount, action) {
     switch (action.type) {
-        case ACCOUNT_ACTION.DEPOSITE:
-            console.log(action);
+        case ACTION.DEPOSITE:
             return {
                 ...currState,
                 balance: currState.balance + action.payload,
             };
 
-        case ACCOUNT_ACTION.WITHDRAW:
+        case ACTION.WITHDRAW:
             return {
                 ...currState,
                 balance: currState.balance - action.payload,
             };
 
-        case ACCOUNT_ACTION.REQUEST_LOAN:
+        case ACTION.REQUEST_LOAN:
             if (currState.loan > 0) return currState;
             return {
                 ...currState,
@@ -59,7 +58,7 @@ export default function accountReducer(currState = intialStateAccount, action) {
                 balance: currState.balance + action.payload.amount,
             };
 
-        case ACCOUNT_ACTION.PAYLOAN:
+        case ACTION.PAYLOAN:
             return {
                 ...currState,
                 loan: 0,

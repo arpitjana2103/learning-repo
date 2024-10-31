@@ -1,4 +1,4 @@
-const CUSTOMER_ACTION = {
+const ACTION = {
     CREATE: "customer/create",
     UPDATE_NAME: "customer/updateName",
 };
@@ -11,13 +11,13 @@ const intialStateCustomer = {
 
 export function createCustomer(fullName, nationalID) {
     return {
-        type: CUSTOMER_ACTION.CREATE,
+        type: ACTION.CREATE,
         payload: { fullName, nationalID, createdAt: new Date().toISOString() },
     };
 }
 
 export function updateName(fullName) {
-    return { type: CUSTOMER_ACTION.UPDATE_NAME, payload: fullName };
+    return { type: ACTION.UPDATE_NAME, payload: fullName };
 }
 
 export default function customerReducer(
@@ -25,7 +25,7 @@ export default function customerReducer(
     action
 ) {
     switch (action.type) {
-        case CUSTOMER_ACTION.CREATE:
+        case ACTION.CREATE:
             return {
                 ...currState,
                 fullName: action.payload.fullName,
@@ -33,7 +33,7 @@ export default function customerReducer(
                 createdAt: action.payload.createdAt,
             };
 
-        case CUSTOMER_ACTION.UPDATE_NAME:
+        case ACTION.UPDATE_NAME:
             return {
                 ...currState,
                 fullName: action.payload,
