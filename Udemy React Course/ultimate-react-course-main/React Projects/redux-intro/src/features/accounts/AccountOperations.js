@@ -6,7 +6,7 @@ function AccountOperations() {
     const [depositAmount, setDepositAmount] = useState("");
     const [withdrawalAmount, setWithdrawalAmount] = useState("");
     const [loanAmount, setLoanAmount] = useState("");
-    const [loanPurpose, setLoanPurpose] = useState("");
+    const [loanPurpose, setLoanPurpose] = useState("Buy a Car");
     const [currency, setCurrency] = useState("USD");
 
     const dispatch = useDispatch();
@@ -14,7 +14,8 @@ function AccountOperations() {
 
     function handleDeposit() {
         if (!depositAmount) return;
-        dispatch(deposite(depositAmount, currency));
+        // dispatch(deposite(depositAmount, currency));
+        dispatch(deposite(depositAmount));
         setDepositAmount("");
     }
 
@@ -26,9 +27,8 @@ function AccountOperations() {
 
     function handleRequestLoan() {
         if (!loanPurpose || !loanPurpose) return;
-        dispatch(requestLoan(loanPurpose, loanAmount));
+        dispatch(requestLoan(loanAmount, loanPurpose));
         setLoanAmount("");
-        setLoanPurpose("");
     }
 
     function handlePayLoan() {
