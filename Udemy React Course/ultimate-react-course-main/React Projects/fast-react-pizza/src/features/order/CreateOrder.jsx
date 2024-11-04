@@ -1,12 +1,15 @@
-import { useState } from "react";
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
+import { isEmpty } from "../../utils/helpers";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
     /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
         str
     );
+
+const isValidName = () => true;
+const isValidAddress = () => true;
 
 const fakeCart = [
     {
@@ -106,9 +109,17 @@ export async function createOrderAction({ request }) {
         ...(!isValidPhone(order.phone)
             ? { phone: "Invalid Phone Number" }
             : null),
+
+        ...(!isValidName(order.customer)
+            ? { customer: "Invalid Customer Name" }
+            : null),
+
+        ...(!isValidAddress(order.address)
+            ? { address: "Invalid Address" }
+            : null),
     };
 
-    if (Object.keys(errors).length > 0) return errors;
+    if (!isEmpty(errors)) return errors;
 
     const newOrder = await createOrder(order);
 
