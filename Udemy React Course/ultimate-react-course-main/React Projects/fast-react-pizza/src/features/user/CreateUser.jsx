@@ -1,30 +1,44 @@
-import { useState } from 'react';
+import { useState } from "react";
+import Emoji from "../../ui/Emoji";
+import Button from "../../ui/Button";
+import { useNavigate } from "react-router-dom";
 
 function CreateUser() {
-  const [username, setUsername] = useState('');
+    const [username, setUsername] = useState("");
+    const navigate = useNavigate();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-  }
+    function handleSubmit(e) {
+        e.preventDefault();
+    }
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <p>👋 Welcome! Please start by telling us your name:</p>
+    return (
+        <form className="text-sm sm:text-base" onSubmit={handleSubmit}>
+            <p className="mb-4 space-x-2">
+                <Emoji txt="👋" />
+                <span>Welcome! Please start by telling us your name:</span>
+            </p>
 
-      <input
-        type="text"
-        placeholder="Your full name"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
+            <input
+                type="text"
+                placeholder="Your full name"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="input mb-8 max-w-80"
+            />
 
-      {username !== '' && (
-        <div>
-          <button>Start ordering</button>
-        </div>
-      )}
-    </form>
-  );
+            {username !== "" && (
+                <div>
+                    <Button
+                        onClick={function () {
+                            navigate("/menu");
+                        }}
+                    >
+                        Start ordering
+                    </Button>
+                </div>
+            )}
+        </form>
+    );
 }
 
 export default CreateUser;
