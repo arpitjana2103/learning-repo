@@ -5,7 +5,12 @@ export default {
         fontFamily: {
             sans: "Roboto Mono, monospace",
         },
-        extend: {},
+
+        extend: {
+            height: {
+                screen: "100dvh",
+            },
+        },
     },
     plugins: [],
 };

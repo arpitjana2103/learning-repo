@@ -12,7 +12,7 @@ function AppLayout() {
             {isLoading && <Loader />}
             <Header />
             <div className="overflow-y-auto">
-                <main className="mx-auto max-w-3xl">
+                <main className="mx-auto h-full max-w-3xl">
                     <Outlet />
                 </main>
             </div>
