@@ -3,8 +3,7 @@ import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
 import { addItem } from "../cart/_cartSlice";
 
-function MenuItem({ pizza, isInCart }) {
-    console.log(isInCart);
+function MenuItem({ pizza }) {
     const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
     const dispatch = useDispatch();
 
@@ -41,9 +40,15 @@ function MenuItem({ pizza, isInCart }) {
                         </p>
                     )}
 
+                    {soldOut && (
+                        <Button disabled={true} type="secondary">
+                            Add to Cart
+                        </Button>
+                    )}
+
                     {!soldOut && (
                         <Button type="small" onClick={handleAddtoCart}>
-                            {isInCart ? "Is in Cart" : "Add to Cart"}
+                            Add to Cart
                         </Button>
                     )}
                 </div>

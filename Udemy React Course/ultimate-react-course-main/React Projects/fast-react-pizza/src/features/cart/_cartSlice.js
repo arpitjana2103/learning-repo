@@ -57,4 +57,16 @@ export const {
     clearCart,
 } = cartSlice.actions;
 
+export const getTotalCartPrice = function (state) {
+    return state.cart.cart.reduce(function (sum, item) {
+        return sum + item.totalPrice;
+    }, 0);
+};
+
+export const getTotalCartItemCount = function (state) {
+    return state.cart.cart.reduce(function (totalQty, item) {
+        return totalQty + item.quantity;
+    }, 0);
+};
+
 export default cartSlice.reducer;

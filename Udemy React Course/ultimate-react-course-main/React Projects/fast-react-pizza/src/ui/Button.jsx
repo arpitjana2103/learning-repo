@@ -7,6 +7,8 @@ function Button({ children, disabled, onClick = null, type = "small" }) {
         small: base + " px-4 py-2 md:px-5 md:py-2.5 text-xs",
         secondary:
             "rounded-full text-sm border-2 border-stone-300 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide transition-colors hover:border-stone-400 hover:bg-stone-400 hover:text-stone-50 focus:outline-none focus:ring-2 focus:ring-stone-300 focus:ring-offset-2 disabled:cursor-not-allowed md:px-5 md:py-2",
+        "secondary-lg":
+            "rounded-full text-sm border-2 border-stone-300 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide transition-colors hover:border-stone-400 hover:bg-stone-400 hover:text-stone-50 focus:outline-none focus:ring-2 focus:ring-stone-300 focus:ring-offset-2 disabled:cursor-not-allowed md:px-5 md:py-2",
     };
 
     return (
