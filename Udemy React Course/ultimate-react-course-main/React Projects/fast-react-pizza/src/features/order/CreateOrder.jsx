@@ -2,6 +2,7 @@ import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import { isEmpty } from "../../utils/helpers";
 import Button from "../../ui/Button";
+import { useSelector } from "react-redux";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -40,6 +41,7 @@ function CreateOrder() {
     const formErrors = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === "submitting";
+    const user = useSelector((state) => state.user);
     // const [withPriority, setWithPriority] = useState(false);
     const cart = fakeCart;
 
@@ -51,17 +53,18 @@ function CreateOrder() {
 
             <Form method="POST" action="/order/new">
                 <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-start">
-                    <label className="sm:basis-40">First Name</label>
+                    <label className="text-sm sm:basis-40">First Name</label>
                     <input
                         className="input flex-grow"
                         type="text"
                         name="customer"
+                        defaultValue={user.userName}
                         required
                     />
                 </div>
 
                 <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-start">
-                    <label className="sm:basis-40">Phone number</label>
+                    <label className="text-sm sm:basis-40">Phone number</label>
                     <div className="flex-grow">
                         <input
                             className="input w-full"
@@ -78,7 +81,7 @@ function CreateOrder() {
                 </div>
 
                 <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-start">
-                    <label className="sm:basis-40">Address</label>
+                    <label className="text-sm sm:basis-40">Address</label>
                     <div className="flex-grow">
                         <input
                             className="input w-full"
@@ -99,7 +102,7 @@ function CreateOrder() {
                         // value={withPriority}
                         // onChange={(e) => setWithPriority(e.target.checked)}
                     />
-                    <label htmlFor="priority">
+                    <label className="text-sm" htmlFor="priority">
                         Want to yo give your order priority?
                     </label>
                 </div>
@@ -110,7 +113,7 @@ function CreateOrder() {
                         name="cart"
                         value={JSON.stringify(cart)}
                     />
-                    <Button type="primary" disabled={isSubmitting}>
+                    <Button type="small" disabled={isSubmitting}>
                         {isSubmitting ? "Placing Ordered ..." : "Order now"}
                     </Button>
                 </div>

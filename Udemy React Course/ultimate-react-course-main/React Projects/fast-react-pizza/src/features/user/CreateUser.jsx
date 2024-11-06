@@ -2,13 +2,20 @@ import { useState } from "react";
 import Emoji from "../../ui/Emoji";
 import Button from "../../ui/Button";
 import { useNavigate } from "react-router-dom";
+import { updateName } from "./_userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function CreateUser() {
-    const [username, setUsername] = useState("Arpit");
+    const user = useSelector((state) => state.user);
+    const [userName, setUserName] = useState(user.userName);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     function handleSubmit(e) {
         e.preventDefault();
+        if (!userName) return;
+        dispatch(updateName(userName));
+        navigate("/menu");
     }
 
     return (
@@ -18,23 +25,22 @@ function CreateUser() {
                 <span>Welcome! Please start by telling us your name:</span>
             </p>
 
-            <input
-                type="text"
-                placeholder="Your full name"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="input mb-8 max-w-80"
-            />
+            {user.userName === "" && (
+                <input
+                    type="text"
+                    placeholder="Your full name"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                    className="input mb-8 max-w-80"
+                />
+            )}
 
-            {username !== "" && (
+            {userName !== "" && (
                 <div>
-                    <Button
-                        type="primary"
-                        onClick={function () {
-                            navigate("/menu");
-                        }}
-                    >
-                        Start ordering
+                    <Button type="primary">
+                        {user.userName
+                            ? `Continue Ordering, ${user.userName}`
+                            : "Start Ordering"}
                     </Button>
                 </div>
             )}
