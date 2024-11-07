@@ -51,6 +51,10 @@ export const {
     clearCart,
 } = cartSlice.actions;
 
+export const getCart = function (state) {
+    return state.cart.cart;
+};
+
 export const getTotalCartPrice = function (state) {
     return state.cart.cart.reduce(function (sum, item) {
         return sum + item.totalPrice;

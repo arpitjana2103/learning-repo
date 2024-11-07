@@ -3,12 +3,12 @@ import LinkButton from "../../ui/LinkButton";
 import Button from "../../ui/Button";
 import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "./_cartSlice";
+import { clearCart, getCart } from "./_cartSlice";
 import EmptyCart from "./EmptyCart";
 
 function Cart() {
     const navigate = useNavigate();
-    const cart = useSelector((state) => state.cart.cart);
+    const cart = useSelector(getCart);
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
