@@ -5,9 +5,9 @@ function Button({ children, disabled, onClick = null, type = "small" }) {
     const styles = {
         primary: base + " px-4 py-3 md:px-6 md:py-4",
         small: base + " px-4 py-2 md:px-5 md:py-2.5 text-xs",
+        // round: base + " px-3 py-2 md:px-3.5 md:py-2.5 text-xs",
+        round: base + " h-8 w-8 md:h-9 md:w-9",
         secondary:
-            "rounded-full text-sm border-2 border-stone-300 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide transition-colors hover:border-stone-400 hover:bg-stone-400 hover:text-stone-50 focus:outline-none focus:ring-2 focus:ring-stone-300 focus:ring-offset-2 disabled:cursor-not-allowed md:px-5 md:py-2",
-        "secondary-lg":
             "rounded-full text-sm border-2 border-stone-300 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide transition-colors hover:border-stone-400 hover:bg-stone-400 hover:text-stone-50 focus:outline-none focus:ring-2 focus:ring-stone-300 focus:ring-offset-2 disabled:cursor-not-allowed md:px-5 md:py-2",
     };
 
