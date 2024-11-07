@@ -3,10 +3,11 @@ import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import { formatCurrency, isEmpty } from "../../utils/helpers";
 import Button from "../../ui/Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearCart, getCart, getTotalCartPrice } from "../cart/_cartSlice";
 import EmptyCart from "../cart/EmptyCart";
 import store from "../../store";
+import { fetchAddress, getUser } from "../user/_userSlice";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -18,14 +19,19 @@ const isValidName = () => true;
 const isValidAddress = () => true;
 
 function CreateOrder() {
+    const dispatch = useDispatch();
+
+    const user = useSelector(getUser);
+    const cart = useSelector(getCart);
+    const totalCartPrice = useSelector(getTotalCartPrice);
+
     const formErrors = useActionData();
     const navigation = useNavigation();
-    const isSubmitting = navigation.state === "submitting";
-    const user = useSelector((state) => state.user);
-    const [withPriority, setWithPriority] = useState(false);
-    const cart = useSelector(getCart);
 
-    const totalCartPrice = useSelector(getTotalCartPrice);
+    const [withPriority, setWithPriority] = useState(false);
+
+    const isLoadingAddress = user.status === "loading";
+    const isSubmitting = navigation.state === "submitting";
     const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
     const totalPrice = priorityPrice + totalCartPrice;
 
@@ -66,15 +72,39 @@ function CreateOrder() {
                     </div>
                 </div>
 
-                <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-start">
+                <div className="inset-y-0.5 top-auto mb-5 flex flex-col gap-2 sm:flex-row sm:items-start">
                     <label className="text-sm sm:basis-40">Address</label>
                     <div className="flex-grow">
-                        <input
-                            className="input w-full"
-                            type="text"
-                            name="address"
-                            required
-                        />
+                        <div className="relative">
+                            <input
+                                className="input w-full"
+                                type="text"
+                                name="address"
+                                defaultValue={user.address}
+                                required
+                            />
+                            <span className="absolute right-[4px] top-1/2 -translate-y-1/2 md:right-[6px]">
+                                {!user.address && (
+                                    <Button
+                                        type="small"
+                                        disabled={isLoadingAddress}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            dispatch(fetchAddress());
+                                        }}
+                                    >
+                                        {isLoadingAddress
+                                            ? "Featching..."
+                                            : "Fetch Address"}
+                                    </Button>
+                                )}
+                            </span>
+                        </div>
+                        {user.error && (
+                            <p className="pl-3 pt-1 text-xs text-red-400">
+                                {user.error}
+                            </p>
+                        )}
                     </div>
                 </div>
 
@@ -98,7 +128,10 @@ function CreateOrder() {
                         name="cart"
                         value={JSON.stringify(cart)}
                     />
-                    <Button type="small" disabled={isSubmitting}>
+                    <Button
+                        type="small"
+                        disabled={isSubmitting || isLoadingAddress}
+                    >
                         {isSubmitting
                             ? "Placing Ordered ..."
                             : `Order now (${formatCurrency(totalPrice)})`}
