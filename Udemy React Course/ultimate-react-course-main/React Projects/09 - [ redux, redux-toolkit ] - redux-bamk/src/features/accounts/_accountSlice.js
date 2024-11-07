@@ -1,4 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+const FRANKFURTER_API = "https://api.frankfurter.app/latest";
+
+const deposite = createAsyncThunk(
+    "account/deposite",
+    async function ({ amount, currency }, thunkAPI) {
+        if (currency === "USD") return amount;
+
+        try {
+            const from = currency;
+            const to = "USD";
+            const res = await fetch(
+                `${FRANKFURTER_API}?base=${from}&symbols=${to}`
+            );
+            const data = await res.json();
+            const rate = data.rates.USD;
+            return rate * amount;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+);
 
 const accountSlice = createSlice({
     name: "account",
@@ -7,12 +29,9 @@ const accountSlice = createSlice({
         loan: 0,
         loanPurpose: "",
         isLoading: false,
+        error: null,
     },
     reducers: {
-        deposite: function (state, action) {
-            state.isLoading = false;
-            state.balance += action.payload;
-        },
         withdraw: function (state, action) {
             state.balance -= action.payload;
         },
@@ -32,29 +51,25 @@ const accountSlice = createSlice({
             state.loanPurpose = "";
             state.loan = 0;
         },
-        convertingCurrency: function (state) {
-            state.isLoading = true;
-        },
+    },
+    extraReducers: function (builder) {
+        return builder
+            .addCase(deposite.pending, function (state, action) {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(deposite.fulfilled, function (state, action) {
+                state.isLoading = false;
+                state.balance += action.payload;
+            })
+            .addCase(deposite.rejected, function (state, action) {
+                state.isLoading = false;
+                state.error = action.payload || "Something went wrong";
+            });
     },
 });
 
 export default accountSlice.reducer;
 
-export function deposite(amount, currency) {
-    if (currency === "USD")
-        return { type: "account/deposite", payload: amount };
-
-    return async function (dispatch, getState) {
-        dispatch({ type: "account/convertingCurrency" });
-        const from = currency;
-        const to = "USD";
-        const res = await fetch(
-            `https://api.frankfurter.app/latest?base=${from}&symbols=${to}`
-        );
-        const data = await res.json();
-        const rate = data.rates.USD;
-        dispatch({ type: "account/deposite", payload: rate * amount });
-    };
-}
-
-export const { withdraw, requestLoan, payLoan } = accountSlice.actions;
+const { withdraw, requestLoan, payLoan } = accountSlice.actions;
+export { deposite, withdraw, requestLoan, payLoan };

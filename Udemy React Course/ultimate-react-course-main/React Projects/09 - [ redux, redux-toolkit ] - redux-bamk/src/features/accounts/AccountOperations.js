@@ -14,7 +14,7 @@ function AccountOperations() {
 
     function handleDeposit() {
         if (!depositAmount) return;
-        dispatch(deposite(depositAmount, currency));
+        dispatch(deposite({ amount: depositAmount, currency: currency }));
         setDepositAmount("");
     }
 
