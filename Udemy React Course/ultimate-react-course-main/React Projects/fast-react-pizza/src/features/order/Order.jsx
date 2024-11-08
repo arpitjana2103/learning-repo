@@ -10,6 +10,7 @@ import {
 } from "../../utils/helpers";
 import Emoji from "../../ui/Emoji";
 import { useEffect } from "react";
+import UpdateOrder from "./UpdateOrder";
 
 export async function orderLoader({ params }) {
     const order = await getOrder(params.orderId);
@@ -97,14 +98,18 @@ export default function Order() {
                 })}
             </ul>
 
+            {!priority && <UpdateOrder />}
+
             <div className="space-y-2 bg-stone-200 px-6 py-5">
-                <p className="text-sm font-medium text-stone-500">
-                    Price pizza: {formatCurrency(orderPrice)}
-                </p>
                 {priority && (
-                    <p className="text-sm font-medium text-stone-500">
-                        Price priority: {formatCurrency(priorityPrice)}
-                    </p>
+                    <>
+                        <p className="text-sm font-medium text-stone-500">
+                            Price pizza: {formatCurrency(orderPrice)}
+                        </p>
+                        <p className="text-sm font-medium text-stone-500">
+                            Price priority: {formatCurrency(priorityPrice)}
+                        </p>
+                    </>
                 )}
                 <p>
                     To pay on delivery:{" "}
