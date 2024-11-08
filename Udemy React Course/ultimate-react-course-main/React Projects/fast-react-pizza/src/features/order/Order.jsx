@@ -1,6 +1,6 @@
 // Test ID: IIDSAT
 
-import { useLoaderData } from "react-router-dom";
+import { useFetcher, useLoaderData } from "react-router-dom";
 import { getOrder } from "../../services/apiRestaurant";
 import OrderItem from "./OrderItem";
 import {
@@ -9,9 +9,25 @@ import {
     formatDate,
 } from "../../utils/helpers";
 import Emoji from "../../ui/Emoji";
+import { useEffect } from "react";
+
+export async function orderLoader({ params }) {
+    const order = await getOrder(params.orderId);
+    return order;
+}
 
 export default function Order() {
     const order = useLoaderData();
+    const fetcher = useFetcher();
+
+    useEffect(
+        function () {
+            if (fetcher.data === undefined && fetcher.state === "idle")
+                fetcher.load("/menu");
+        },
+        [fetcher],
+    );
+
     // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
     const {
         id,
@@ -22,7 +38,10 @@ export default function Order() {
         estimatedDelivery,
         cart,
     } = order;
+
     const deliveryIn = calcMinutesLeft(estimatedDelivery);
+    const menuDataLoading = fetcher.state === "loading";
+    const menuData = fetcher.data;
 
     return (
         <div className="space-y-8 px-4 py-6">
@@ -60,7 +79,21 @@ export default function Order() {
 
             <ul className="divide-y divide-stone-200 border-b border-t">
                 {cart.map(function (item) {
-                    return <OrderItem item={item} key={item.pizzaId} />;
+                    return (
+                        <OrderItem
+                            item={item}
+                            key={item.pizzaId}
+                            isLoadingIngredients={menuDataLoading}
+                            ingredients={
+                                !menuData
+                                    ? []
+                                    : menuData.find(
+                                          (menuItem) =>
+                                              menuItem.id === item.pizzaId,
+                                      ).ingredients
+                            }
+                        />
+                    );
                 })}
             </ul>
 
@@ -80,9 +113,4 @@ export default function Order() {
             </div>
         </div>
     );
-}
-
-export async function orderLoader({ params }) {
-    const order = await getOrder(params.orderId);
-    return order;
 }
