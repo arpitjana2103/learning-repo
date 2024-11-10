@@ -71,6 +71,18 @@
         "lng": "88.43994140625001"
       },
       "id": 8
+    },
+    {
+      "cityName": "Amravati",
+      "country": "India",
+      "emoji": "🇮🇳",
+      "date": "2024-11-10T14:00:55.181Z",
+      "notes": "This is all about Amravati",
+      "position": {
+        "lat": "20.879342971957897",
+        "lng": "77.69531250000001"
+      },
+      "id": 9
     }
   ],
   "cities2": []
