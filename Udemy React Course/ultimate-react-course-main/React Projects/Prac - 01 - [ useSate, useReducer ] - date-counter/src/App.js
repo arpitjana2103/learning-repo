@@ -6,8 +6,8 @@ export default function App() {
     return (
         <>
             {/* <DateCounterV1 /> */}
-            {/* <DateCounterV2 /> */}
-            <DateCounterV3 />
+            <DateCounterV2 />
+            {/* <DateCounterV3 /> */}
         </>
     );
 }

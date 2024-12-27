@@ -42,6 +42,7 @@ export function DateCounterV2() {
         alignItems: "center",
         gap: "1rem",
     };
+
     return (
         <div style={style}>
             <div>

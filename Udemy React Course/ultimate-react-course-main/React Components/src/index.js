@@ -14,11 +14,11 @@ root.render(
 
         <Container title="Star Rating">
             <StarRating
-                maxRating={5}
-                defaultRating={2}
+                maxRating={10}
+                defaultRating={0}
                 color="#22b8cf"
                 size={24}
-                messages={["One", "Two", "Three", "Four", "Five"]}
+                messages={["Html", "CSS", "JS", "Py", "Java"]}
             />
         </Container>
 

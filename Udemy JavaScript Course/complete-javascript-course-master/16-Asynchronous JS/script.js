@@ -169,5 +169,5 @@ const getCountryData2 = async function (countryName) {
 };
 
 btn.addEventListener("click", function () {
-    getCountryData("Indiat");
+    getCountryData("India");
 });
