@@ -1,6 +1,7 @@
 const fs = require("fs");
 const http = require("http");
 const url = require("url");
+const replaceTemplate = require("./modules/replaceTemplate");
 
 ////////////////// FILE
 /*
@@ -42,18 +43,6 @@ const templateProduct = fs.readFileSync(
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const dataObj = JSON.parse(data);
 
-function replaceTemplate(template, product) {
-    return template
-        .replaceAll("{%PRODUCTIMGAGE%}", product.image)
-        .replaceAll("{%PRODUCTNAME%}", product.productName)
-        .replaceAll("{%PRODUCTQUANTITY%}", product.quantity)
-        .replaceAll("{%PRODUCTPRICE%}", product.price)
-        .replaceAll("{%PRODUCTID%}", product.id)
-        .replaceAll("{%PRODUCTFROM%}", product.from)
-        .replaceAll("{%PRODUCTNUTRIENTS%}", product.nutrients)
-        .replaceAll("{%PRODUCTDESCRIPTION%}", product.description);
-}
-
 function getOverViewHTML() {
     let productCards = "";
     dataObj.forEach(function (data) {
@@ -71,33 +60,34 @@ const server = http.createServer(function (request, response) {
 
     switch (pathname) {
         case "/":
-        case "/overview":
+        case "/overview": {
             response.writeHead(200, {
                 "Content-type": "text/html",
             });
-            response.end(getOverViewHTML());
-            break;
+            return response.end(getOverViewHTML());
+        }
 
-        case "/product":
+        case "/product": {
             const product = dataObj.at(query.id);
             response.writeHead(200, {
                 "Content-type": "text/html",
             });
-            response.end(getProductHTML(product));
-            break;
+            return response.end(getProductHTML(product));
+        }
 
-        case "/api":
+        case "/api": {
             response.writeHead(404, {
                 "Content-type": "application/json",
             });
-            response.end(data);
-            break;
+            return response.end(data);
+        }
 
-        default:
+        default: {
             response.writeHead(404, {
                 "Content-type": "text/html",
             });
-            response.end("<h1>404 Not Found</h1>");
+            return response.end("<h1>404 Not Found</h1>");
+        }
     }
 });
 
