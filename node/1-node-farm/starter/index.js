@@ -26,20 +26,64 @@ console.log("Will read File");
 */
 
 ////////////////// SERVER
+const templateOverview = fs.readFileSync(
+    `${__dirname}/templates/template-overview.html`,
+    "utf-8"
+);
+const templateCard = fs.readFileSync(
+    `${__dirname}/templates/template-card.html`,
+    "utf-8"
+);
+const templateProduct = fs.readFileSync(
+    `${__dirname}/templates/template-product.html`,
+    "utf-8"
+);
+
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const dataObj = JSON.parse(data);
 
-const server = http.createServer(function (request, response) {
-    const pathName = request.url;
+function replaceTemplate(template, product) {
+    return template
+        .replaceAll("{%PRODUCTIMGAGE%}", product.image)
+        .replaceAll("{%PRODUCTNAME%}", product.productName)
+        .replaceAll("{%PRODUCTQUANTITY%}", product.quantity)
+        .replaceAll("{%PRODUCTPRICE%}", product.price)
+        .replaceAll("{%PRODUCTID%}", product.id)
+        .replaceAll("{%PRODUCTFROM%}", product.from)
+        .replaceAll("{%PRODUCTNUTRIENTS%}", product.nutrients)
+        .replaceAll("{%PRODUCTDESCRIPTION%}", product.description);
+}
 
-    switch (pathName) {
+function getOverViewHTML() {
+    let productCards = "";
+    dataObj.forEach(function (data) {
+        productCards += replaceTemplate(templateCard, data);
+    });
+    return templateOverview.replaceAll("{%PRODUCTCARDS%}", productCards);
+}
+
+function getProductHTML(product) {
+    return replaceTemplate(templateProduct, product);
+}
+
+const server = http.createServer(function (request, response) {
+    const { query, pathname } = url.parse(request.url, true);
+
+    switch (pathname) {
         case "/":
         case "/overview":
-            response.end("This the Overview");
+            response.writeHead(200, {
+                "Content-type": "text/html",
+            });
+            response.end(getOverViewHTML());
             break;
 
         case "/product":
-            response.end("This is the Product Page");
+            const product = dataObj.at(query.id);
+            response.writeHead(200, {
+                "Content-type": "text/html",
+            });
+            response.end(getProductHTML(product));
             break;
 
         case "/api":
