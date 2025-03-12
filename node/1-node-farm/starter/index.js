@@ -42,6 +42,7 @@ const templateProduct = fs.readFileSync(
 
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const dataObj = JSON.parse(data);
+// Hello World
 
 function getOverViewHTML() {
     let productCards = "";
