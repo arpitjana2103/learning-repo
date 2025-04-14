@@ -26,7 +26,6 @@ fs.readFile("./txt/start.txt", "utf-8", function (err, data01) {
 console.log("Will read File");
 */
 
-////////////////// SERVER
 const templateOverview = fs.readFileSync(
     `${__dirname}/templates/template-overview.html`,
     "utf-8"
@@ -91,6 +90,6 @@ const server = http.createServer(function (request, response) {
     }
 });
 
-server.listen(8000, "127.0.0.1", function () {
-    console.log("Listening to requests on port 8000");
+server.listen(5000, function () {
+    console.log("Server is running : http://localhost:5000/");
 });
