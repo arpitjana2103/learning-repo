@@ -54,6 +54,11 @@ function getProductHTML(product) {
     return replaceTemplate(templateProduct, product);
 }
 
+//////// Event Listening for server
+
+// const server = http.createServer();
+// server.on("requrest", function(req, res){ })
+
 const server = http.createServer(function (request, response) {
     const { query, pathname } = url.parse(request.url, true);
 
