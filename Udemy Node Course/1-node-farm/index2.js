@@ -1,9 +1,12 @@
 const http = require("http");
 const url = require("url");
 const fs = require("fs");
+const slugify = require("slugify");
 
 // const server = http.createServer(function(req, res){
 // })
+
+console.log(slugify("Arpit Jana"));
 
 const server = http.createServer();
 
@@ -20,7 +23,8 @@ server.on("request", function (req, res) {
 
     if (pathname === "/product") {
         res.writeHead(200, { "Content-type": "text/html" });
-        res.end(`<h1>Product Page</h1>`);
+        const colorValue = query.color;
+        res.end(`<h1 style="color:${colorValue};">Product Page</h1>`);
     }
 
     if (pathname === "/api") {
